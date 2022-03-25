@@ -1,8 +1,10 @@
-const router = require("express").Router();
+const apiRouter = require("express").Router();
 const RoleRoute = require("./role.route");
 const AuthRoute = require("./auth.route");
+const UserRoute = require("./user.route");
 
-router.use("/role", RoleRoute);
-router.use("/auth", AuthRoute);
+apiRouter.use("/role", RoleRoute);
+apiRouter.use("/auth", AuthRoute);
+apiRouter.use("/user", UserRoute);
 
-module.exports = router;
+module.exports = apiRouter;

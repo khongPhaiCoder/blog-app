@@ -14,4 +14,12 @@ UserService.findByField = async (payload) => {
     });
 };
 
+UserService.updateUser = async (id, payload) => {
+    return await UserModel.findByIdAndUpdate(
+        id,
+        { $set: payload },
+        { new: true }
+    );
+};
+
 module.exports = UserService;
