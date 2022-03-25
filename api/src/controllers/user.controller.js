@@ -4,6 +4,7 @@ const CustomError = require("../errors");
 const UserService = require("../services/user.service");
 const wrapAsync = require("../utils/wrap-async");
 const clearImage = require("../utils/clear-image");
+const { shortUser } = require("../utils/short-object");
 
 const UserController = {};
 
@@ -44,6 +45,23 @@ UserController.deleteUser = wrapAsync(async (req, res, next) => {
 
     res.status(StatusCodes.OK).json({
         message: "User deleted!",
+    });
+});
+
+UserController.getUser = wrapAsync(async (req, res, next) => {
+    const { userId } = req.params;
+
+    const user = (await UserService.findByField({ _id: userId }))[0];
+
+    if (!user) {
+        throw new CustomError.NotFoundError("User not found!");
+    }
+
+    const shUser = shortUser(user);
+
+    res.status(StatusCodes.OK).json({
+        message: `user ${userId}`,
+        user: { ...shUser, posts: undefined },
     });
 });
 

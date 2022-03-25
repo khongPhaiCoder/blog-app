@@ -5,7 +5,8 @@ const requestValidation = require("../middleware/request-validation.middleware")
 
 router
     .route("/:userId")
-    .all(UserMiddleware.paramsValidation)
+    .all(UserMiddleware.paramsValidation, requestValidation)
+    .get(UserController.getUser)
     .put(
         UserMiddleware.bodyUpdateValidation,
         requestValidation,
