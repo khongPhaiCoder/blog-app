@@ -14,7 +14,11 @@ const RoleSchema = new mongoose.Schema(
 );
 
 RoleSchema.post("save", function (error, doc, next) {
-    if (error.name === "MongoServerError" && error.code === 11000) {
+    if (
+        error.name === "MongoServerError" &&
+        error.code === 11000 &&
+        error.keyPattern.name === 1
+    ) {
         next(new CustomError.BadRequestError("Role already exist!"));
     } else {
         next(error);

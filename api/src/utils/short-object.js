@@ -7,6 +7,16 @@ const shortRole = (role) => {
     };
 };
 
+const shortUser = (user) => {
+    const { _id, password, createdAt, updatedAt, __v, ...other } = user._doc;
+
+    return {
+        _id: _id.toString(),
+        ...other,
+    };
+};
+
 module.exports = {
     shortRole,
+    shortUser,
 };

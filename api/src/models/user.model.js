@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CustomError = require("../errors/index");
 
 const UserSchema = new mongoose.Schema(
     {
@@ -39,5 +40,17 @@ const UserSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+UserSchema.post("save", function (error, doc, next) {
+    if (
+        error.name === "MongoServerError" &&
+        error.code === 11000 &&
+        error.keyPattern.email === 1
+    ) {
+        next(new CustomError.BadRequestError("Email already exist!"));
+    } else {
+        next(error);
+    }
+});
 
 module.exports = mongoose.model("User", UserSchema);
