@@ -13,6 +13,7 @@ router.post(
 router
     .route("/:postId")
     .all(PostMiddleware.paramsValidation, requestValidation)
-    .get(PostController.getPost);
+    .get(PostController.getPost)
+    .delete(PostController.deletePost);
 
 module.exports = router;

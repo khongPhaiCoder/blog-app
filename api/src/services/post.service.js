@@ -29,4 +29,8 @@ PostService.addComment = async (id, commentId) => {
     });
 };
 
+PostService.deletePost = async (id) => {
+    return await PostModel.findByIdAndDelete(id);
+};
+
 module.exports = PostService;

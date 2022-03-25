@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const UserService = require("../services/user.service");
+const clearImage = require("../utils/clear-image");
 
 const PostSchema = new mongoose.Schema(
     {
@@ -50,6 +51,14 @@ const PostSchema = new mongoose.Schema(
 
 PostSchema.post("save", async (doc) => {
     await UserService.addPost(doc.author, doc._id.toString());
+});
+
+PostSchema.post("findOneAndDelete", (doc) => {
+    if (doc.images) {
+        for (let item of doc.images) {
+            clearImage(item);
+        }
+    }
 });
 
 module.exports = mongoose.model("Post", PostSchema);

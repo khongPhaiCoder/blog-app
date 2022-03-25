@@ -49,4 +49,18 @@ PostController.getPost = wrapAsync(async (req, res, next) => {
     });
 });
 
+PostController.deletePost = wrapAsync(async (req, res, next) => {
+    const { postId } = req.params;
+
+    if (!(await PostService.isExist(postId))) {
+        throw new CustomError.NotFoundError(`Post ${postId} not found!`);
+    }
+
+    await PostService.deletePost(postId);
+
+    res.status(StatusCodes.OK).json({
+        message: "Post deleted!",
+    });
+});
+
 module.exports = PostController;
