@@ -30,4 +30,10 @@ UserService.isExist = async (id) => {
     return await UserModel.exists({ _id: id });
 };
 
+UserService.addPost = async (id, postId) => {
+    return await UserModel.findByIdAndUpdate(id, {
+        $push: { posts: postId },
+    });
+};
+
 module.exports = UserService;

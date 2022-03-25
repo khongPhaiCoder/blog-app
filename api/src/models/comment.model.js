@@ -1,27 +1,28 @@
 const mongoose = require("mongoose");
 
-const PostSchema = new mongoose.Schema(
+const PostService = require("../services/post.service");
+
+const CommentSchema = new mongoose.Schema(
     {
         author: {
             type: mongoose.Types.ObjectId,
             ref: "User",
         },
+        post: {
+            type: mongoose.Types.ObjectId,
+            ref: "Post",
+        },
+        replies: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "Comment",
+            },
+        ],
         content: {
             type: String,
             required: true,
         },
-        images: [
-            {
-                type: String,
-            },
-        ],
-        categories: [
-            {
-                type: mongoose.Types.ObjectId,
-                ref: "Category",
-            },
-        ],
-        likes: [
+        like: [
             {
                 type: mongoose.Types.ObjectId,
                 ref: "User",
@@ -33,12 +34,12 @@ const PostSchema = new mongoose.Schema(
                 ref: "User",
             },
         ],
-        views: {
-            type: Number,
-            default: 0,
-        },
     },
     { timestamps: true }
 );
 
-module.exports = mongoose.model("Post", PostSchema);
+CommentSchema.post("save", (error, doc, next) => {
+    console.log(doc);
+});
+
+module.exports = mongoose.model("Comment", CommentSchema);
