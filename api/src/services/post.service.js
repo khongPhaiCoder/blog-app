@@ -15,4 +15,10 @@ PostService.newPost = async (payload) => {
     return await post.save();
 };
 
+PostService.addComment = async (id, commentId) => {
+    return await PostModel.findByIdAndUpdate(id, {
+        $push: { comments: commentId },
+    });
+};
+
 module.exports = PostService;
