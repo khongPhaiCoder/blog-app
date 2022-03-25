@@ -33,4 +33,18 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
     });
 });
 
+UserController.deleteUser = wrapAsync(async (req, res, next) => {
+    const { userId } = req.params;
+
+    if (!(await UserService.isExist(userId))) {
+        throw new CustomError.NotFoundError("User not found!");
+    }
+
+    await UserService.deleteUser(userId);
+
+    res.status(StatusCodes.OK).json({
+        message: "User deleted!",
+    });
+});
+
 module.exports = UserController;

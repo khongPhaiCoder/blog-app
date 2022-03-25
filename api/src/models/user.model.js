@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const CustomError = require("../errors/index");
+const clearImage = require("../utils/clear-image");
 
 const UserSchema = new mongoose.Schema(
     {
@@ -42,7 +43,7 @@ const UserSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-UserSchema.post("save", function (error, doc, next) {
+UserSchema.post("save", (error, doc, next) => {
     if (
         error.name === "MongoServerError" &&
         error.code === 11000 &&
@@ -51,6 +52,15 @@ UserSchema.post("save", function (error, doc, next) {
         next(new CustomError.BadRequestError("Email already exist!"));
     } else {
         next(error);
+    }
+});
+
+UserSchema.post("findOneAndDelete", (doc) => {
+    if (
+        doc.profilePicture &&
+        doc.profilePicture !== process.env.DEFAULT_PROFILE_PICTURE
+    ) {
+        clearImage(doc.profilePicture);
     }
 });
 

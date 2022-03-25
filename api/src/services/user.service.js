@@ -22,4 +22,12 @@ UserService.updateUser = async (id, payload) => {
     );
 };
 
+UserService.deleteUser = async (id) => {
+    return await UserModel.findByIdAndDelete(id);
+};
+
+UserService.isExist = async (id) => {
+    return await UserModel.exists({ _id: id });
+};
+
 module.exports = UserService;

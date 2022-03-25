@@ -10,6 +10,7 @@ router
         UserMiddleware.bodyUpdateValidation,
         requestValidation,
         UserController.updateUser
-    );
+    )
+    .delete(UserController.deleteUser);
 
 module.exports = router;
