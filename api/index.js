@@ -34,6 +34,9 @@ app.use(
     express.static(path.join(__dirname, "public", "images"))
 );
 
+app.use("/api", require("./src/routes/index"));
+app.use(require("./src/routes/error-handler.route"));
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
