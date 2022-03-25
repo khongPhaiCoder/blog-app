@@ -24,4 +24,13 @@ AuthMiddleware.bodyRegisterValidation = [
         .withMessage("password must have at least 6 characters"),
 ];
 
+AuthMiddleware.bodyLoginValidation = [
+    body("email")
+        .not()
+        .isEmpty()
+        .withMessage("email is required")
+        .isEmail("please enter valid email").normalizeEmail,
+    body("password").not().isEmpty().withMessage("password is required"),
+];
+
 module.exports = AuthMiddleware;

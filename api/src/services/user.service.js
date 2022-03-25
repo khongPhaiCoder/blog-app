@@ -7,4 +7,11 @@ UserService.newUser = async (payload) => {
     return await user.save();
 };
 
+UserService.findByField = async (payload) => {
+    return await UserModel.find(payload).populate({
+        path: "roles",
+        select: "name",
+    });
+};
+
 module.exports = UserService;

@@ -11,4 +11,11 @@ router.post(
     AuthController.register
 );
 
+router.post(
+    "/login",
+    AuthMiddleware.bodyLoginValidation,
+    requestValidation,
+    AuthController.login
+);
+
 module.exports = router;
