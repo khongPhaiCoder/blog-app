@@ -10,4 +10,9 @@ router.post(
     PostController.newPost
 );
 
+router
+    .route("/:postId")
+    .all(PostMiddleware.paramsValidation, requestValidation)
+    .get(PostController.getPost);
+
 module.exports = router;

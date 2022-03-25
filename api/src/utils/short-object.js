@@ -24,8 +24,18 @@ const shortCategory = (category) => {
     };
 };
 
+const shortPost = (post) => {
+    const { _id, createdAt, updatedAt, __v, ...other } = post._doc;
+    return {
+        _id: _id.toString(),
+        date: updatedAt,
+        ...other,
+    };
+};
+
 module.exports = {
     shortRole,
     shortUser,
     shortCategory,
+    shortPost,
 };

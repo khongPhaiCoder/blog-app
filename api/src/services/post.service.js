@@ -3,7 +3,15 @@ const PostModel = require("../models/post.model");
 const PostService = {};
 
 PostService.findByField = async (payload) => {
-    return await PostModel.find(payload);
+    return await PostModel.find(payload)
+        .populate({
+            path: "categories",
+            select: "name",
+        })
+        .populate({
+            path: "author",
+            select: "username email profilePicture",
+        });
 };
 
 PostService.isExist = async (id) => {

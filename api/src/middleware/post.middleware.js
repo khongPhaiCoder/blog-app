@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 const PostMiddleware = {};
@@ -17,5 +17,7 @@ PostMiddleware.bodyNewPostValidation = [
             return true;
         }),
 ];
+
+PostMiddleware.paramsValidation = [param("postId").isMongoId()];
 
 module.exports = PostMiddleware;
