@@ -14,10 +14,16 @@ PostController.newPost = wrapAsync(async (req, res, next) => {
         throw new CustomError.NotFoundError(`Author ${author} not found!`);
     }
 
+    let images = [];
+    if (req.files && req.files.postImages) {
+        images = req.files.postImages.map((item) => item.filename);
+    }
+
     const post = await PostService.newPost({
         author: author,
         content: content,
         categories: categories,
+        images: images,
     });
 
     res.status(StatusCodes.CREATED).json({

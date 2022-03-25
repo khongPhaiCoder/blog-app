@@ -31,6 +31,9 @@ multerConfig.options = {
     fileFilter: fileFilter,
 };
 
-multerConfig.fields = [{ name: "profilePicture", maxCount: 1 }];
+multerConfig.fields = [
+    { name: "profilePicture", maxCount: 1 },
+    { name: "postImages" },
+];
 
 module.exports = multerConfig;
