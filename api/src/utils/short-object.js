@@ -16,7 +16,16 @@ const shortUser = (user) => {
     };
 };
 
+const shortCategory = (category) => {
+    const { _id, createdAt, updatedAt, __v, ...other } = category._doc;
+    return {
+        _id: _id.toString(),
+        ...other,
+    };
+};
+
 module.exports = {
     shortRole,
     shortUser,
+    shortCategory,
 };
