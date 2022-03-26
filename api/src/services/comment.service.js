@@ -26,4 +26,8 @@ CommentService.updateComment = async (id, payload) => {
     });
 };
 
+CommentService.deleteComment = async (id) => {
+    return await CommentModel.findByIdAndDelete(id);
+};
+
 module.exports = CommentService;

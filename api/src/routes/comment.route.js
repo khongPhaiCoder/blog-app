@@ -18,6 +18,7 @@ router
         CommentMiddleware.bodyUpdateValidation,
         requestValidation,
         CommentController.updateComment
-    );
+    )
+    .delete(CommentController.deleteComment);
 
 module.exports = router;

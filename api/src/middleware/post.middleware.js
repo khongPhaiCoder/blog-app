@@ -4,6 +4,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const PostService = require("../services/post.service");
 const UserService = require("../services/user.service");
 const CategoryService = require("../services/category.service");
+const CustomError = require("../errors/index");
 
 const PostMiddleware = {};
 
@@ -12,7 +13,7 @@ PostMiddleware.bodyNewAndUpdatePostValidation = [
         .isMongoId()
         .custom(async (value) => {
             if (!(await UserService.isExist(value))) {
-                return Promise.reject(`User ${value} not found!`);
+                throw new CustomError.NotFoundError(`User ${value} not found!`);
             }
             return true;
         }),
@@ -22,10 +23,12 @@ PostMiddleware.bodyNewAndUpdatePostValidation = [
         .custom(async (value) => {
             for (let item of value) {
                 if (!ObjectId.isValid(item)) {
-                    return Promise.reject("Invalid value!");
+                    throw new CustomError.BadRequestError("Invalid value!");
                 }
                 if (!(await CategoryService.isExist(item))) {
-                    return Promise.reject(`Category ${item} not found!`);
+                    throw new CustomError.NotFoundError(
+                        `Category ${value} not found!`
+                    );
                 }
             }
             return true;
@@ -42,7 +45,7 @@ PostMiddleware.ReactValidation = [
         .isMongoId()
         .custom(async (value) => {
             if (!(await PostService.isExist(value))) {
-                return Promise.reject(`Post ${value} not found!`);
+                throw new CustomError.NotFoundError(`Post ${value} not found!`);
             }
             return true;
         }),
@@ -50,7 +53,7 @@ PostMiddleware.ReactValidation = [
         .isMongoId()
         .custom(async (value) => {
             if (!(await UserService.isExist(value))) {
-                return Promise.reject(`User ${value} not found!`);
+                throw new CustomError.NotFoundError(`User ${value} not found!`);
             }
             return true;
         }),
@@ -61,7 +64,7 @@ PostMiddleware.paramsValidation = [
         .isMongoId()
         .custom(async (value) => {
             if (!(await PostService.isExist(value))) {
-                return Promise.reject(`Post ${value} not found!`);
+                throw new CustomError.NotFoundError(`Post ${value} not found!`);
             }
             return true;
         }),

@@ -2,7 +2,6 @@ const { StatusCodes } = require("http-status-codes");
 
 const CommentService = require("../services/comment.service");
 const wrapAsync = require("../utils/wrap-async");
-const CustomError = require("../errors/index");
 
 const CommentController = {};
 
@@ -45,6 +44,16 @@ CommentController.updateComment = wrapAsync(async (req, res, next) => {
 
     res.status(StatusCodes.OK).json({
         message: `Comment ${commentId} updated!`,
+    });
+});
+
+CommentController.deleteComment = wrapAsync(async (req, res, next) => {
+    const { commentId } = req.params;
+
+    await CommentService.deleteComment(commentId);
+
+    res.status(StatusCodes.OK).json({
+        message: `Comment ${commentId} deleted`,
     });
 });
 

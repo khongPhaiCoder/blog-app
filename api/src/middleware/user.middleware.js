@@ -3,6 +3,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 const UserService = require("../services/user.service");
 const RoleService = require("../services/role.service");
+const CustomError = require("../errors/index");
 
 const UserMiddleware = {};
 
@@ -11,7 +12,7 @@ UserMiddleware.paramsValidation = [
         .isMongoId()
         .custom(async (value) => {
             if (!(await UserService.isExist(value))) {
-                return Promise.reject(`User ${value} not found!`);
+                throw new CustomError.NotFoundError(`User ${value} not found!`);
             }
             return true;
         }),
@@ -28,10 +29,12 @@ UserMiddleware.bodyUpdateValidation = [
         .custom(async (value) => {
             for (let item of value) {
                 if (!ObjectId.isValid(item)) {
-                    return Promise.reject("Invalid value!");
+                    throw new CustomError.BadRequestError("Invalid value!");
                 }
                 if (!(await RoleService.isExist(item))) {
-                    return Promise.reject(`Role ${item} not found!`);
+                    throw new CustomError.NotFoundError(
+                        `Role ${value} not found!`
+                    );
                 }
             }
             return true;

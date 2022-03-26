@@ -42,4 +42,8 @@ CommentSchema.post("save", async (doc) => {
     await PostService.addComment(doc.post, doc._id);
 });
 
+CommentSchema.post("findOneAndDelete", async (doc) => {
+    await PostService.removeComment(doc.post, doc._id);
+});
+
 module.exports = mongoose.model("Comment", CommentSchema);

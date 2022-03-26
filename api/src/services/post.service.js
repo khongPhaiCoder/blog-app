@@ -71,4 +71,10 @@ PostService.addComment = async (postId, commentId) => {
     });
 };
 
+PostService.removeComment = async (postId, commentId) => {
+    return await PostModel.findByIdAndUpdate(postId, {
+        $pull: { comments: commentId },
+    });
+};
+
 module.exports = PostService;
