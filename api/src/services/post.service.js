@@ -22,6 +22,20 @@ PostService.findByField = async (payload) => {
         });
 };
 
+PostService.getPostList = async () => {
+    return await PostModel.find({})
+        .select("author title categories likes dislike views comments")
+        .sort({ updatedAt: -1 })
+        .populate({
+            path: "categories",
+            select: "name",
+        })
+        .populate({
+            path: "author",
+            select: "username email profilePicture",
+        });
+};
+
 PostService.isExist = async (id) => {
     return await PostModel.exists({ _id: id });
 };

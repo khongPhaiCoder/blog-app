@@ -1,5 +1,4 @@
 const { StatusCodes } = require("http-status-codes");
-const CustomError = require("../errors/index");
 
 const UserService = require("../services/user.service");
 const wrapAsync = require("../utils/wrap-async");

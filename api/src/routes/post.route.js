@@ -4,12 +4,14 @@ const PostController = require("../controllers/post.controller");
 const PostMiddleware = require("../middleware/post.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 
-router.post(
-    "/",
-    PostMiddleware.bodyNewAndUpdatePostValidation,
-    requestValidation,
-    PostController.newPost
-);
+router
+    .route("/")
+    .get(PostController.getPostList)
+    .post(
+        PostMiddleware.bodyNewAndUpdatePostValidation,
+        requestValidation,
+        PostController.newPost
+    );
 
 router
     .route("/:postId")

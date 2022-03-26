@@ -1,8 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 
-const CustomError = require("../errors/index");
 const PostService = require("../services/post.service");
-const UserService = require("../services/user.service");
 const clearImage = require("../utils/clear-image");
 const { shortPost } = require("../utils/short-object");
 const wrapAsync = require("../utils/wrap-async");
@@ -10,7 +8,7 @@ const wrapAsync = require("../utils/wrap-async");
 const PostController = {};
 
 PostController.newPost = wrapAsync(async (req, res, next) => {
-    const { author, content, categories } = req.body;
+    const { author, title, content, categories } = req.body;
 
     let images = [];
     if (req.files && req.files.postImages) {
@@ -19,6 +17,7 @@ PostController.newPost = wrapAsync(async (req, res, next) => {
 
     const post = await PostService.newPost({
         author: author,
+        title: title,
         content: content,
         categories: categories,
         images: images,
@@ -109,6 +108,15 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
 
     res.status(StatusCodes.OK).json({
         message: `React to post ${postId} successfully.`,
+    });
+});
+
+PostController.getPostList = wrapAsync(async (req, res, next) => {
+    const posts = await PostService.getPostList();
+
+    res.status(StatusCodes.OK).json({
+        message: "Get post list",
+        posts: posts,
     });
 });
 

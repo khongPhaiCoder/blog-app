@@ -17,6 +17,7 @@ PostMiddleware.bodyNewAndUpdatePostValidation = [
             }
             return true;
         }),
+    body("title").not().isEmpty(),
     body("content").not().isEmpty(),
     body("categories")
         .isArray()
