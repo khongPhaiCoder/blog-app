@@ -43,7 +43,7 @@ AuthController.login = wrapAsync(async (req, res, next) => {
     const token = createJWT({
         id: user._id.toString(),
         email: user.email,
-        roles: user.roles,
+        roles: user.roles.map((item) => item.name),
     });
 
     res.status(StatusCodes.OK).json({

@@ -29,7 +29,9 @@ AuthMiddleware.bodyLoginValidation = [
         .not()
         .isEmpty()
         .withMessage("email is required")
-        .isEmail("please enter valid email").normalizeEmail,
+        .isEmail()
+        .withMessage("please enter valid email")
+        .normalizeEmail(),
     body("password").not().isEmpty().withMessage("password is required"),
 ];
 
