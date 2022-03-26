@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const PostService = require("../services/post.service");
-
 const CommentSchema = new mongoose.Schema(
     {
         author: {
@@ -37,9 +35,5 @@ const CommentSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-
-CommentSchema.post("save", (error, doc, next) => {
-    console.log(doc);
-});
 
 module.exports = mongoose.model("Comment", CommentSchema);

@@ -82,10 +82,12 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
     }
 
     await PostService.updatePost(postId, {
-        author: author,
-        content: content,
-        categories: categories,
-        images: images,
+        $set: {
+            author: author,
+            content: content,
+            categories: categories,
+            images: images,
+        },
     });
 
     postImage.map((item) => clearImage(item));

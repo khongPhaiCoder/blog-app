@@ -5,7 +5,7 @@ const requestValidation = require("../middleware/request-validation.middleware")
 
 router.post(
     "/",
-    PostMiddleware.bodyNewPostValidation,
+    PostMiddleware.bodyNewAndUpdatePostValidation,
     requestValidation,
     PostController.newPost
 );
@@ -14,7 +14,11 @@ router
     .route("/:postId")
     .all(PostMiddleware.paramsValidation, requestValidation)
     .get(PostController.getPost)
-    .put(PostController.updatePost)
+    .put(
+        PostMiddleware.bodyNewAndUpdatePostValidation,
+        requestValidation,
+        PostController.updatePost
+    )
     .delete(PostController.deletePost);
 
 module.exports = router;

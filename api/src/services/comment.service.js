@@ -13,17 +13,15 @@ CommentService.findById = async (id) => {
             path: "author",
             select: "username profilePicture",
         })
-        .populate("reply");
+        .populate("replies");
 };
 
 CommentService.isExist = async (id) => {
     return await CommentModel.exists({ _id: id });
 };
 
-CommentService.reply = async (id, childCommentId) => {
-    return await CommentModel.findByIdAndUpdate(id, {
-        $push: { replies: childCommentId },
-    });
+CommentService.update = async (...payload) => {
+    return await CommentModel.findByIdAndUpdate(...payload);
 };
 
 module.exports = CommentService;

@@ -3,7 +3,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 const PostMiddleware = {};
 
-PostMiddleware.bodyNewPostValidation = [
+PostMiddleware.bodyNewAndUpdatePostValidation = [
     body("author").isMongoId(),
     body("content").not().isEmpty(),
     body("categories")

@@ -35,7 +35,9 @@ CommentController.newComment = wrapAsync(async (req, res, next) => {
     });
 
     if (parentComment) {
-        await CommentService.reply(replyTo, comment._id.toString());
+        await CommentService.update(replyTo, {
+            $push: { replies: comment._id.toString() },
+        });
     }
 
     res.status(StatusCodes.CREATED).json({

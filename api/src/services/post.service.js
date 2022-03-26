@@ -23,20 +23,12 @@ PostService.newPost = async (payload) => {
     return await post.save();
 };
 
-PostService.addComment = async (id, commentId) => {
-    return await PostModel.findByIdAndUpdate(id, {
-        $push: { comments: commentId },
-    });
-};
-
 PostService.deletePost = async (id) => {
     return await PostModel.findByIdAndDelete(id);
 };
 
-PostService.updatePost = async (id, payload) => {
-    return await PostModel.findByIdAndUpdate(id, {
-        $set: payload,
-    });
+PostService.updatePost = async (...payload) => {
+    return await PostModel.findByIdAndUpdate(...payload);
 };
 
 module.exports = PostService;
