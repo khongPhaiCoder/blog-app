@@ -11,4 +11,13 @@ router.post(
     CommentController.newComment
 );
 
+router
+    .route("/:commentId")
+    .all(CommentMiddleware.paramValidation, requestValidation)
+    .put(
+        CommentMiddleware.bodyUpdateValidation,
+        requestValidation,
+        CommentController.updateComment
+    );
+
 module.exports = router;

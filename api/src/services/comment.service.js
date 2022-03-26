@@ -20,4 +20,10 @@ CommentService.isExist = async (id) => {
     return await CommentModel.exists({ _id: id });
 };
 
+CommentService.updateComment = async (id, payload) => {
+    return await CommentModel.findByIdAndUpdate(id, {
+        $set: payload,
+    });
+};
+
 module.exports = CommentService;

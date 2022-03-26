@@ -37,4 +37,15 @@ CommentController.newComment = wrapAsync(async (req, res, next) => {
     });
 });
 
+CommentController.updateComment = wrapAsync(async (req, res, next) => {
+    const { commentId } = req.params;
+    const { content } = req.body;
+
+    await CommentService.updateComment(commentId, { content: content });
+
+    res.status(StatusCodes.OK).json({
+        message: `Comment ${commentId} updated!`,
+    });
+});
+
 module.exports = CommentController;

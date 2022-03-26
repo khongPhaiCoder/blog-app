@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const UserService = require("../services/user.service");
 const PostService = require("../services/post.service");
@@ -33,6 +33,21 @@ CommentMiddleware.bodyNewCommentValidation = [
             return true;
         }),
     body("content").not().isEmpty(),
+];
+
+CommentMiddleware.paramValidation = [
+    param("commentId")
+        .isMongoId()
+        .custom(async (value) => {
+            if (!(await CommentService.isExist(value))) {
+                return Promise.reject(`Comment ${value} not found!`);
+            }
+            return true;
+        }),
+];
+
+CommentMiddleware.bodyUpdateValidation = [
+    body("content").not().isEmpty().withMessage("Content is required!"),
 ];
 
 module.exports = CommentMiddleware;
