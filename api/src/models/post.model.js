@@ -50,15 +50,20 @@ const PostSchema = new mongoose.Schema(
 );
 
 PostSchema.post("save", async (doc) => {
-    await UserService.addPost(doc.author, doc._id.toString());
+    await UserService.updateUser(doc.author, {
+        $push: { posts: doc._id.toString() },
+    });
 });
 
-PostSchema.post("findOneAndDelete", (doc) => {
+PostSchema.post("findOneAndDelete", async (doc) => {
     if (doc.images) {
         for (let item of doc.images) {
             clearImage(item);
         }
     }
+    await UserService.updateUser(doc.author, {
+        $pull: { posts: doc._id.toString() },
+    });
 });
 
 module.exports = mongoose.model("Post", PostSchema);

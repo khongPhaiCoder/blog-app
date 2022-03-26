@@ -27,7 +27,9 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
         updateInfo.profilePicture = req.files.profilePicture[0].filename;
     }
 
-    await UserService.updateUser(userId, updateInfo);
+    await UserService.updateUser(userId, {
+        $set: updateInfo,
+    });
 
     res.status(StatusCodes.OK).json({
         message: "Account updated!",
