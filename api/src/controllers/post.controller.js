@@ -1,4 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
+
 const CustomError = require("../errors/index");
 const PostService = require("../services/post.service");
 const UserService = require("../services/user.service");
@@ -94,6 +95,46 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
 
     res.status(StatusCodes.OK).json({
         message: "Post updated",
+    });
+});
+
+PostController.reactPost = wrapAsync(async (req, res, next) => {
+    const { react } = req.query;
+    const { postId } = req.params;
+    const { userId } = req.body;
+
+    const post = (await PostService.findByField({ _id: postId }))[0];
+
+    if (!post) {
+        throw new CustomError.NotFoundError(`Post ${postId} not found!`);
+    }
+
+    if (!(await UserService.isExist(userId))) {
+        throw new CustomError.NotFoundError(`User ${userId} not found!`);
+    }
+
+    if (react === "like") {
+        if (post._doc.likes.includes(userId)) {
+            await PostService.removeLike(postId, userId);
+        } else {
+            await PostService.addLike(postId, userId);
+        }
+        if (post._doc.dislike.includes(userId)) {
+            await PostService.removeDislike(postId, userId);
+        }
+    } else {
+        if (post._doc.dislike.includes(userId)) {
+            await PostService.removeDislike(postId, userId);
+        } else {
+            await PostService.addDislike(postId, userId);
+        }
+        if (post._doc.likes.includes(userId)) {
+            await PostService.removeLike(postId, userId);
+        }
+    }
+
+    res.status(StatusCodes.OK).json({
+        message: `React to post ${postId} successfully.`,
     });
 });
 

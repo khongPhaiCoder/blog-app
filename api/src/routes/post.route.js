@@ -21,4 +21,11 @@ router
     )
     .delete(PostController.deletePost);
 
+router.post(
+    "/:postId/react",
+    PostMiddleware.ReactValidation,
+    requestValidation,
+    PostController.reactPost
+);
+
 module.exports = router;

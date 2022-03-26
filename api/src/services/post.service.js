@@ -39,4 +39,28 @@ PostService.updatePost = async (...payload) => {
     return await PostModel.findByIdAndUpdate(...payload);
 };
 
+PostService.addLike = async (postId, userId) => {
+    return await PostModel.findByIdAndUpdate(postId, {
+        $push: { likes: userId },
+    });
+};
+
+PostService.addDislike = async (postId, userId) => {
+    return await PostModel.findByIdAndUpdate(postId, {
+        $push: { dislike: userId },
+    });
+};
+
+PostService.removeLike = async (postId, userId) => {
+    return await PostModel.findByIdAndUpdate(postId, {
+        $pull: { likes: userId },
+    });
+};
+
+PostService.removeDislike = async (postId, userId) => {
+    return await PostModel.findByIdAndUpdate(postId, {
+        $pull: { dislike: userId },
+    });
+};
+
 module.exports = PostService;

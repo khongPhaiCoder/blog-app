@@ -1,4 +1,4 @@
-const { body, param } = require("express-validator");
+const { body, param, query } = require("express-validator");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 const PostMiddleware = {};
@@ -16,6 +16,16 @@ PostMiddleware.bodyNewAndUpdatePostValidation = [
             }
             return true;
         }),
+];
+
+PostMiddleware.ReactValidation = [
+    query("react")
+        .not()
+        .isEmpty()
+        .isIn(["like", "dislike"])
+        .withMessage("Unknown reaction"),
+    param("postId").isMongoId(),
+    body("userId").isMongoId(),
 ];
 
 PostMiddleware.paramsValidation = [param("postId").isMongoId()];
