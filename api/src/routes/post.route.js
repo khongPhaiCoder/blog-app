@@ -14,6 +14,7 @@ router
     .route("/:postId")
     .all(PostMiddleware.paramsValidation, requestValidation)
     .get(PostController.getPost)
+    .put(PostController.updatePost)
     .delete(PostController.deletePost);
 
 module.exports = router;
