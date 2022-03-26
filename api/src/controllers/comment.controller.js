@@ -57,4 +57,36 @@ CommentController.deleteComment = wrapAsync(async (req, res, next) => {
     });
 });
 
+CommentController.reactComment = wrapAsync(async (req, res, next) => {
+    const { react } = req.query;
+    const { commentId } = req.params;
+    const { userId } = req.body;
+
+    const comment = await CommentService.findById(commentId);
+
+    if (react === "like") {
+        if (comment._doc.like.includes(userId)) {
+            await CommentService.removeLike(commentId, userId);
+        } else {
+            await CommentService.addLike(commentId, userId);
+        }
+        if (comment._doc.dislike.includes(userId)) {
+            await CommentService.removeDislike(commentId, userId);
+        }
+    } else {
+        if (comment._doc.dislike.includes(userId)) {
+            await CommentService.removeDislike(commentId, userId);
+        } else {
+            await CommentService.addDislike(commentId, userId);
+        }
+        if (comment._doc.like.includes(userId)) {
+            await CommentService.removeLike(commentId, userId);
+        }
+    }
+
+    res.status(StatusCodes.OK).json({
+        message: `React to comment ${commentId} successfully.`,
+    });
+});
+
 module.exports = CommentController;

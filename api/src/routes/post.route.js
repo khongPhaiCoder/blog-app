@@ -24,7 +24,7 @@ router
 
 router.post(
     "/:postId/react",
-    PostMiddleware.ReactValidation,
+    PostMiddleware.reactValidation,
     requestValidation,
     PostController.reactPost
 );

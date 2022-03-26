@@ -1,4 +1,4 @@
-const { body, param } = require("express-validator");
+const { body, param, query } = require("express-validator");
 
 const UserService = require("../services/user.service");
 const PostService = require("../services/post.service");
@@ -53,6 +53,32 @@ CommentMiddleware.paramValidation = [
 
 CommentMiddleware.bodyUpdateValidation = [
     body("content").not().isEmpty().withMessage("Content is required!"),
+];
+
+CommentMiddleware.reactValidation = [
+    query("react")
+        .not()
+        .isEmpty()
+        .isIn(["like", "dislike"])
+        .withMessage("Unknown reaction"),
+    param("commentId")
+        .isMongoId()
+        .custom(async (value) => {
+            if (!(await CommentService.isExist(value))) {
+                throw new CustomError.NotFoundError(
+                    `Comment ${value} not found!`
+                );
+            }
+            return true;
+        }),
+    body("userId")
+        .isMongoId()
+        .custom(async (value) => {
+            if (!(await UserService.isExist(value))) {
+                throw new CustomError.NotFoundError(`User ${value} not found!`);
+            }
+            return true;
+        }),
 ];
 
 module.exports = CommentMiddleware;

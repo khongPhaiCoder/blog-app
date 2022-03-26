@@ -21,4 +21,11 @@ router
     )
     .delete(CommentController.deleteComment);
 
+router.post(
+    "/:commentId/react",
+    CommentMiddleware.reactValidation,
+    requestValidation,
+    CommentController.reactComment
+);
+
 module.exports = router;

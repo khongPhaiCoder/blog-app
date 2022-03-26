@@ -8,12 +8,10 @@ CommentService.newComment = async (payload) => {
 };
 
 CommentService.findById = async (id) => {
-    return await CommentModel.findById(id)
-        .populate({
-            path: "author",
-            select: "username profilePicture",
-        })
-        .populate("replies");
+    return await CommentModel.findById(id).populate({
+        path: "author",
+        select: "username profilePicture",
+    });
 };
 
 CommentService.isExist = async (id) => {
@@ -28,6 +26,30 @@ CommentService.updateComment = async (id, payload) => {
 
 CommentService.deleteComment = async (id) => {
     return await CommentModel.findByIdAndDelete(id);
+};
+
+CommentService.addLike = async (commentId, userId) => {
+    return await CommentModel.findByIdAndUpdate(commentId, {
+        $push: { like: userId },
+    });
+};
+
+CommentService.removeLike = async (commentId, userId) => {
+    return await CommentModel.findByIdAndUpdate(commentId, {
+        $pull: { like: userId },
+    });
+};
+
+CommentService.addDislike = async (commentId, userId) => {
+    return await CommentModel.findByIdAndUpdate(commentId, {
+        $push: { dislike: userId },
+    });
+};
+
+CommentService.removeDislike = async (commentId, userId) => {
+    return await CommentModel.findByIdAndUpdate(commentId, {
+        $pull: { dislike: userId },
+    });
 };
 
 module.exports = CommentService;

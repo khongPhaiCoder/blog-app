@@ -35,7 +35,7 @@ PostMiddleware.bodyNewAndUpdatePostValidation = [
         }),
 ];
 
-PostMiddleware.ReactValidation = [
+PostMiddleware.reactValidation = [
     query("react")
         .not()
         .isEmpty()
