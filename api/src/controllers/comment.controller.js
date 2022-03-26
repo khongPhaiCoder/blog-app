@@ -1,9 +1,10 @@
+const { StatusCodes } = require("http-status-codes");
+
 const CommentService = require("../services/comment.service");
 const UserService = require("../services/user.service");
 const PostService = require("../services/post.service");
 const wrapAsync = require("../utils/wrap-async");
 const CustomError = require("../errors/index");
-const { StatusCodes } = require("http-status-codes");
 
 const CommentController = {};
 
@@ -18,15 +19,15 @@ CommentController.newComment = wrapAsync(async (req, res, next) => {
         throw new CustomError.NotFoundError(`Post ${post} not found!`);
     }
 
-    let parentComment;
-    if (replyTo) {
-        if (!(await CommentService.isExist(replyTo))) {
-            throw new CustomError.NotFoundError(
-                `Comment ${replyTo} not found!`
-            );
-        }
-        parentComment = await CommentService.findById(replyTo);
-    }
+    // let parentComment;
+    // if (replyTo) {
+    //     if (!(await CommentService.isExist(replyTo))) {
+    //         throw new CustomError.NotFoundError(
+    //             `Comment ${replyTo} not found!`
+    //         );
+    //     }
+    //     parentComment = await CommentService.findById(replyTo);
+    // }
 
     const comment = await CommentService.newComment({
         author: author,
@@ -34,11 +35,11 @@ CommentController.newComment = wrapAsync(async (req, res, next) => {
         content: content,
     });
 
-    if (parentComment) {
-        await CommentService.update(replyTo, {
-            $push: { replies: comment._id.toString() },
-        });
-    }
+    // if (parentComment) {
+    //     await CommentService.update(replyTo, {
+    //         $push: { replies: comment._id.toString() },
+    //     });
+    // }
 
     res.status(StatusCodes.CREATED).json({
         message: "Comment created",
