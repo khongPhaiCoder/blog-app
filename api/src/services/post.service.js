@@ -35,8 +35,10 @@ PostService.deletePost = async (id) => {
     return await PostModel.findByIdAndDelete(id);
 };
 
-PostService.updatePost = async (...payload) => {
-    return await PostModel.findByIdAndUpdate(...payload);
+PostService.updatePost = async (id, payload) => {
+    return await PostModel.findByIdAndUpdate(id, {
+        $set: payload,
+    });
 };
 
 PostService.addLike = async (postId, userId) => {
@@ -60,6 +62,12 @@ PostService.removeLike = async (postId, userId) => {
 PostService.removeDislike = async (postId, userId) => {
     return await PostModel.findByIdAndUpdate(postId, {
         $pull: { dislike: userId },
+    });
+};
+
+PostService.addComment = async (postId, commentId) => {
+    return await PostModel.findByIdAndUpdate(postId, {
+        $push: { comments: commentId },
     });
 };
 

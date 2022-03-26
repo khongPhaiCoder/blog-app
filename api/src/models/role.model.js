@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const CustomError = require("../errors/index");
 
 const RoleSchema = new mongoose.Schema(

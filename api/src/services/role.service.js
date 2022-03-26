@@ -11,4 +11,8 @@ RoleService.findByField = async (payload) => {
     return await RoleModel.find(payload);
 };
 
+RoleService.isExist = async (id) => {
+    return await RoleModel.exists({ _id: id });
+};
+
 module.exports = RoleService;

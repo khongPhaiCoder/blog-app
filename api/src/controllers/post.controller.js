@@ -12,10 +12,6 @@ const PostController = {};
 PostController.newPost = wrapAsync(async (req, res, next) => {
     const { author, content, categories } = req.body;
 
-    if (!(await UserService.isExist(author))) {
-        throw new CustomError.NotFoundError(`Author ${author} not found!`);
-    }
-
     let images = [];
     if (req.files && req.files.postImages) {
         images = req.files.postImages.map((item) => item.filename);
@@ -39,10 +35,6 @@ PostController.getPost = wrapAsync(async (req, res, next) => {
 
     const post = (await PostService.findByField({ _id: postId }))[0];
 
-    if (!post) {
-        throw new CustomError.NotFoundError("Post not found!");
-    }
-
     const shPost = shortPost(post);
 
     res.status(StatusCodes.OK).json({
@@ -53,10 +45,6 @@ PostController.getPost = wrapAsync(async (req, res, next) => {
 
 PostController.deletePost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
-
-    if (!(await PostService.isExist(postId))) {
-        throw new CustomError.NotFoundError(`Post ${postId} not found!`);
-    }
 
     await PostService.deletePost(postId);
 
@@ -70,10 +58,6 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
 
     const post = (await PostService.findByField({ _id: postId }))[0];
 
-    if (!post) {
-        throw new CustomError.NotFoundError(`Post ${postId} not found!`);
-    }
-
     const postImage = post._doc.images;
 
     const { author, content, categories } = req.body;
@@ -83,12 +67,10 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
     }
 
     await PostService.updatePost(postId, {
-        $set: {
-            author: author,
-            content: content,
-            categories: categories,
-            images: images,
-        },
+        author: author,
+        content: content,
+        categories: categories,
+        images: images,
     });
 
     postImage.map((item) => clearImage(item));
@@ -104,14 +86,6 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
     const { userId } = req.body;
 
     const post = (await PostService.findByField({ _id: postId }))[0];
-
-    if (!post) {
-        throw new CustomError.NotFoundError(`Post ${postId} not found!`);
-    }
-
-    if (!(await UserService.isExist(userId))) {
-        throw new CustomError.NotFoundError(`User ${userId} not found!`);
-    }
 
     if (react === "like") {
         if (post._doc.likes.includes(userId)) {

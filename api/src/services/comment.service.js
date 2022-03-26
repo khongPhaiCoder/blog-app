@@ -20,8 +20,4 @@ CommentService.isExist = async (id) => {
     return await CommentModel.exists({ _id: id });
 };
 
-CommentService.update = async (...payload) => {
-    return await CommentModel.findByIdAndUpdate(...payload);
-};
-
 module.exports = CommentService;

@@ -14,8 +14,10 @@ UserService.findByField = async (payload) => {
     });
 };
 
-UserService.updateUser = async (...payload) => {
-    return await UserModel.findByIdAndUpdate(...payload);
+UserService.updateUser = async (id, payload) => {
+    return await UserModel.findByIdAndUpdate(id, {
+        $set: payload,
+    });
 };
 
 UserService.deleteUser = async (id) => {
@@ -24,6 +26,18 @@ UserService.deleteUser = async (id) => {
 
 UserService.isExist = async (id) => {
     return await UserModel.exists({ _id: id });
+};
+
+UserService.addPost = async (userId, postId) => {
+    return await UserModel.findByIdAndUpdate(userId, {
+        $push: { posts: postId },
+    });
+};
+
+UserService.removePost = async (userId, postId) => {
+    return await UserModel.findByIdAndUpdate(userId, {
+        $pull: { posts: postId },
+    });
 };
 
 module.exports = UserService;

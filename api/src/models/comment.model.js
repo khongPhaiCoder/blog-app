@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const PostService = require("../services/post.service");
 
 const CommentSchema = new mongoose.Schema(
@@ -38,9 +39,7 @@ const CommentSchema = new mongoose.Schema(
 );
 
 CommentSchema.post("save", async (doc) => {
-    await PostService.updatePost(doc.post, {
-        $push: { comments: doc._id },
-    });
+    await PostService.addComment(doc.post, doc._id);
 });
 
 module.exports = mongoose.model("Comment", CommentSchema);

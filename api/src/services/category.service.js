@@ -11,4 +11,8 @@ CategoryService.findByField = async (payload) => {
     return await CategoryModel.find(payload);
 };
 
+CategoryService.isExist = async (id) => {
+    return await CategoryModel.exists({ _id: id });
+};
+
 module.exports = CategoryService;

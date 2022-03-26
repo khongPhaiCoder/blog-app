@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const UserService = require("../services/user.service");
 const clearImage = require("../utils/clear-image");
 
@@ -50,9 +51,7 @@ const PostSchema = new mongoose.Schema(
 );
 
 PostSchema.post("save", async (doc) => {
-    await UserService.updateUser(doc.author, {
-        $push: { posts: doc._id.toString() },
-    });
+    await UserService.addPost(doc.author, doc._id);
 });
 
 PostSchema.post("findOneAndDelete", async (doc) => {
@@ -61,9 +60,7 @@ PostSchema.post("findOneAndDelete", async (doc) => {
             clearImage(item);
         }
     }
-    await UserService.updateUser(doc.author, {
-        $pull: { posts: doc._id.toString() },
-    });
+    await UserService.removePost(doc.author, doc._id);
 });
 
 module.exports = mongoose.model("Post", PostSchema);

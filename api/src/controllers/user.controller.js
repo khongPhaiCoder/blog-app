@@ -13,10 +13,6 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
 
     const user = (await UserService.findByField({ _id: userId }))[0];
 
-    if (!user) {
-        throw new CustomError.NotFoundError("User not found!");
-    }
-
     const { username, roles } = req.body;
     const updateInfo = { username, roles };
 
@@ -27,9 +23,7 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
         updateInfo.profilePicture = req.files.profilePicture[0].filename;
     }
 
-    await UserService.updateUser(userId, {
-        $set: updateInfo,
-    });
+    await UserService.updateUser(userId, updateInfo);
 
     res.status(StatusCodes.OK).json({
         message: "Account updated!",
@@ -38,10 +32,6 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
 
 UserController.deleteUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
-
-    if (!(await UserService.isExist(userId))) {
-        throw new CustomError.NotFoundError("User not found!");
-    }
 
     await UserService.deleteUser(userId);
 
@@ -54,10 +44,6 @@ UserController.getUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
 
     const user = (await UserService.findByField({ _id: userId }))[0];
-
-    if (!user) {
-        throw new CustomError.NotFoundError("User not found!");
-    }
 
     const shUser = shortUser(user);
 

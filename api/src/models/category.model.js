@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const CustomError = require("../errors");
 
 const CategorySchema = new mongoose.Schema(
