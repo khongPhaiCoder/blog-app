@@ -11,6 +11,14 @@ PostService.findByField = async (payload) => {
         .populate({
             path: "author",
             select: "username email profilePicture",
+        })
+        .populate({
+            path: "comments",
+            select: "author content like dislike",
+            populate: {
+                path: "author",
+                select: "username email profilePicture",
+            },
         });
 };
 
