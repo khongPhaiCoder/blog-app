@@ -34,4 +34,15 @@ authenticationMiddleware.authorizePermissions = wrapAsync((req, res, next) => {
     next();
 });
 
+authenticationMiddleware.authorizePrivatePermissions = wrapAsync(
+    (req, res, next) => {
+        if (req.userId !== req.body.userId) {
+            throw new CustomError.UnauthorizedError(
+                "Unauthorized to access this route"
+            );
+        }
+        next();
+    }
+);
+
 module.exports = authenticationMiddleware;
