@@ -1,0 +1,49 @@
+.login__container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray-200);
+}
+
+.login__form {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 356px;
+    background-color: white;
+    padding: 15px 10px;
+    border-radius: 10px;
+}
+
+.forgot-password {
+    font-size: 14px;
+}
+
+.forgot-password a {
+    text-decoration: none;
+}
+
+@media screen and (min-width: 576px) {
+    .login__form {
+        width: 400px;
+        max-width: none;
+        padding: 15px 30px;
+    }
+
+    .login__form div.form-group {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 4px 0px;
+    }
+
+    .login__form div.form-check {
+        margin: 12px auto !important;
+    }
+
+    .forgot-password {
+        margin: 6px 0;
+    }
+}
