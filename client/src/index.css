@@ -10,3 +10,8 @@
     --gray-800: #1f2937;
     --gray-900: #111827;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
