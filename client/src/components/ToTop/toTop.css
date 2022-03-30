@@ -1,0 +1,17 @@
+.to-top-arrow {
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    width: 100%;
+    left: 95%;
+    bottom: 40px;
+    color: rgba(0, 0, 0, 0.5);
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+}
+
+/* .to-top-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.75);
+} */

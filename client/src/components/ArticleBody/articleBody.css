@@ -1,0 +1,9 @@
+.article-body .title {
+    font-size: 40px;
+    color: #1b1b1b;
+    margin-left: 20px;
+}
+
+.article-body .content {
+    margin-left: 20px;
+}

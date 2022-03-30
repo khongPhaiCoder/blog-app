@@ -1,0 +1,25 @@
+.home {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 15px;
+}
+
+.left {
+    flex: 3;
+    min-width: 0;
+}
+
+.right {
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 992px) {
+    .right {
+        display: none;
+    }
+}

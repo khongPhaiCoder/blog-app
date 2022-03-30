@@ -1,0 +1,44 @@
+.footer {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.brand {
+    font-size: 20px;
+    line-height: 30px;
+    margin: 0px 16px 0px 0px;
+    padding: 5px 0px;
+}
+
+.social {
+    width: 60%;
+    max-width: 240px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.icon.facebook {
+    color: #4267b2;
+}
+
+.icon.youtube {
+    color: #ff0000;
+}
+
+.icon.github {
+    color: #171515;
+}
+
+.icon.skype {
+    color: #00aff0;
+}

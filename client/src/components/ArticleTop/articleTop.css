@@ -1,0 +1,50 @@
+.article-top {
+    margin: 40px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.article-top-left {
+    display: flex;
+    margin-right: auto;
+}
+
+.article-top-left .author-info p {
+    margin-bottom: 0px;
+    font-size: 16px;
+}
+
+.article-top-left .author-info .email {
+    font-size: 14px;
+    color: var(--gray-400);
+}
+
+.article-top-left .author-info .author-name {
+    font-weight: 600;
+    color: #6e629c;
+}
+
+.article-top-right {
+    margin-left: 20px;
+}
+
+.article-top-right p {
+    margin-bottom: 0;
+    margin-left: auto;
+}
+
+.article-top-right .post-time {
+    font-size: 14px;
+    color: var(--gray-400);
+}
+
+.article-top-right span {
+    color: var(--gray-400);
+    width: 25px;
+    margin: 2px 4px;
+    font-size: 16px;
+}
+
+.article-top-right .icon {
+    margin-right: 2px;
+}

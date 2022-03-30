@@ -1,0 +1,102 @@
+.setting {
+    display: flex;
+}
+
+.setting-wrapper {
+    flex: 9;
+    padding: 20px;
+}
+
+.setting-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.setting-title-update {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: lightcoral;
+}
+
+.setting-title-delete {
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.setting-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.setting-profile-picture {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.setting-profile-picture img {
+    height: 70px;
+    width: 70px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.setting-profile-picture-icon {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 50%;
+    margin-left: 10px;
+    color: white;
+    background-color: lightcoral;
+    cursor: pointer;
+}
+
+.setting-form label {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.setting-profile-picture-input {
+    width: 30%;
+}
+
+.setting-form input {
+    color: gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid lightgray;
+}
+
+.setting-form input:focus {
+    outline-style: none;
+}
+
+.setting-submit-button {
+    align-self: center;
+    width: 150px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.setting-submit-button:hover {
+    background-color: rgb(1, 114, 114);
+}
