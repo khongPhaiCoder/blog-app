@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAlert } from "react-alert";
+import axios from "axios";
 import "./signUp.css";
 
 const SignUp = () => {
@@ -7,12 +9,21 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const onSubmitHandler = (e) => {
+    const alert = useAlert();
+
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
 
-        console.log(username);
-        console.log(email);
-        console.log(password);
+        try {
+            const res = await axios.post("/auth/register", {
+                username,
+                email,
+                password,
+            });
+            res.data && window.location.replace("/login");
+        } catch (err) {
+            alert.error(err.response.data.message);
+        }
     };
 
     return (

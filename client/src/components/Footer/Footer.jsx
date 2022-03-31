@@ -8,7 +8,7 @@ import "./footer.css";
 const Footer = () => {
     return (
         <div className="footer">
-            <Container>
+            <Container fluid>
                 <Link to="/" className="brand">
                     Blog app
                 </Link>

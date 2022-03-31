@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import "./topbar.css";
 import { Login } from "./Login";
 import Setting from "./Setting";
+import { Context } from "../../context/Context";
 
 const Topbar = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
     };
 
-    const isLoggedIn = false;
+    const { user } = useContext(Context);
 
     return (
         <Navbar bg="light" expand="lg">
-            <Container>
+            <Container fluid>
                 <Navbar.Brand href="/">Blog app</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarSupportedContent" />
                 <Navbar.Collapse id="navbarSupportedContent">
@@ -26,6 +27,9 @@ const Topbar = () => {
                         </Nav.Link>
                         <Nav.Link href="/" className="nav-item">
                             Discussion
+                        </Nav.Link>
+                        <Nav.Link href="/write" className="nav-item">
+                            Write
                         </Nav.Link>
                     </Nav>
                     <form className="d-flex search" onSubmit={onSubmitHandler}>
@@ -40,7 +44,11 @@ const Topbar = () => {
                         </button>
                     </form>
                     <hr />
-                    {isLoggedIn ? <Setting /> : <Login />}
+                    {user ? (
+                        <Setting avatar={user.profilePicture} />
+                    ) : (
+                        <Login />
+                    )}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

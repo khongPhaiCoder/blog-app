@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAlert } from "react-alert";
+import { Context } from "../../context/Context";
 import "./login.css";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { dispatch, isFetching } = useContext(Context);
 
-    const onSubmitHandler = (e) => {
+    const alert = useAlert();
+
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
+        dispatch({ type: "LOGIN_START" });
 
-        console.log(email);
-        console.log(password);
+        try {
+            const res = await axios.post("/auth/login", {
+                email: email,
+                password: password,
+            });
+            dispatch({ type: "LOGIN_SUCCESS", payload: res.data.user });
+        } catch (err) {
+            dispatch({ type: "LOGIN_FAILURE" });
+            alert.error(err.response.data.message);
+        }
     };
 
     return (

@@ -39,7 +39,12 @@ const ShortArticle = ({ article, infoTop }) => {
                             })}
                         </div>
                     )}
-                    <p className="article-title">{article.title}</p>
+                    <Link
+                        to={`/article/${article._id}`}
+                        className="article-title"
+                    >
+                        {article.title}
+                    </Link>
                     <div className="info-bottom">
                         <FontAwesomeIcon
                             icon={solid("sort")}

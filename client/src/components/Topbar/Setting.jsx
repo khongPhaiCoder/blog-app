@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Dropdown, Nav, Image } from "react-bootstrap";
+import { Context } from "../../context/Context";
 
-const Setting = () => {
+const Setting = ({ avatar }) => {
+    const { dispatch } = useContext(Context);
+
+    const onLogoutHandler = () => {
+        dispatch({ type: "LOGOUT" });
+    };
+
     const MobileSetting = () => {
         return (
             <Nav className="me-auto my-2 mb-lg-0 mobile-setting">
                 <Nav.Link href="/" className="nav-item">
-                    Profile
-                </Nav.Link>
-                <Nav.Link href="/" className="nav-item">
                     Settings
                 </Nav.Link>
-                <Nav.Link href="/" className="nav-item">
+                <Nav.Link
+                    href="/"
+                    className="nav-item"
+                    onClick={onLogoutHandler}
+                >
                     Logout
                 </Nav.Link>
             </Nav>
@@ -26,13 +34,14 @@ const Setting = () => {
                         roundedCircle
                         width="36"
                         height="36"
-                        src="https://media.dayoftheshirt.com/images/shirts/LE9Fb/teepublic_black-cat-and-knife-what-shirt-teepublic_1571926081.large.png"
+                        src={`${process.env.REACT_APP_IMAGE_PATH}${avatar}`}
                     />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item href="/">Profile</Dropdown.Item>
-                    <Dropdown.Item href="/">Settings</Dropdown.Item>
-                    <Dropdown.Item href="/">Logout</Dropdown.Item>
+                    <Dropdown.Item href="/setting">Settings</Dropdown.Item>
+                    <Dropdown.Item href="/" onClick={onLogoutHandler}>
+                        Logout
+                    </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         );

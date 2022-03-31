@@ -1,12 +1,11 @@
 import React from "react";
-import { shortArticles } from "../../DummyData";
 import ShortArticle from "../ShortArticle/ShortArticle";
 import "./articleList.css";
 
-const ArticleList = () => {
+const ArticleList = ({ posts }) => {
     return (
         <div className="article-list">
-            {shortArticles.map((item) => {
+            {posts.map((item) => {
                 return (
                     <ShortArticle
                         article={item}

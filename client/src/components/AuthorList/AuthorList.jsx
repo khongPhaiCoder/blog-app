@@ -8,7 +8,7 @@ const AuthorList = () => {
         <div>
             <h4 className="ms-2 mt-1">Top authors</h4>
             {authors.map((author) => {
-                return <Author author={author} />;
+                return <Author author={author} key={author._id} />;
             })}
         </div>
     );

@@ -1,7 +1,15 @@
+.article-body {
+    width: 100%;
+}
+
 .article-body .title {
     font-size: 40px;
     color: #1b1b1b;
     margin-left: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    /* display: inline-block; */
+    text-overflow: ellipsis;
 }
 
 .article-body .content {

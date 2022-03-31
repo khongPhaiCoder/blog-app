@@ -27,7 +27,7 @@ const ArticleTop = ({ author, date, likes, dislikes, views, comments }) => {
             </div>
             <div className="article-top-right">
                 <p className="post-time">Posted {format(date)}</p>
-                <div className="article-info">
+                <div>
                     <span>
                         <FontAwesomeIcon icon={solid("eye")} className="icon" />{" "}
                         {views}

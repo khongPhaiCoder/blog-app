@@ -40,12 +40,13 @@
     padding-top: 0;
     padding-bottom: 0;
     line-height: 36px;
+    margin-left: auto;
 }
 
 @media screen and (min-width: 992px) {
     .require-login__container {
         display: flex !important;
-        padding-left: 00.5rem;
+        padding-left: 0.5rem;
     }
 
     .mobile-setting {
@@ -55,6 +56,7 @@
     .large-screen-setting {
         display: block;
         box-shadow: none;
+        margin-right: 5rem;
         margin-left: 1rem;
     }
 }

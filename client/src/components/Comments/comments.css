@@ -1,0 +1,55 @@
+.cmt {
+    display: flex;
+    gap: 16px;
+}
+
+.cmt-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cmt-right .cmt-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cmt-right .cmt-author {
+    font-weight: 500;
+}
+
+.cmt-right .cmt-top span {
+    color: var(--gray-400);
+}
+
+.cmt-bottom {
+    display: flex;
+    gap: 16px;
+    color: var(--gray-500);
+}
+
+.comments {
+    margin: 40px 0;
+}
+
+.comments .login-btn {
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+}
+
+.comments .login-btn:hover {
+    color: #fff;
+}
+
+.write-comment {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.write-comment textarea {
+    color: var(--gray-400);
+}
