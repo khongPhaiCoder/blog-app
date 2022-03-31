@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+
 const CustomError = require("../errors/index");
 
 const requestValidation = (req, res, next) => {

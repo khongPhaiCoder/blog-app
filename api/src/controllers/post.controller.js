@@ -112,7 +112,8 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
 });
 
 PostController.getPostList = wrapAsync(async (req, res, next) => {
-    const posts = await PostService.getPostList();
+    const { q = "", page = 1 } = req.params;
+    const posts = await PostService.getPostList(q, page);
 
     res.status(StatusCodes.OK).json({
         message: "Get post list",

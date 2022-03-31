@@ -6,11 +6,11 @@ const createJWT = (payload) => {
     });
 };
 
-const isValidJWTToken = (token) => {
+const decodedJWTToken = (token) => {
     return jwt.verify(token, process.env.JWT_SECRET);
 };
 
 module.exports = {
     createJWT,
-    isValidJWTToken,
+    decodedJWTToken,
 };

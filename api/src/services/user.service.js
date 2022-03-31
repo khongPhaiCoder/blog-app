@@ -40,4 +40,11 @@ UserService.removePost = async (userId, postId) => {
     });
 };
 
+UserService.getAuthors = async () => {
+    return await UserModel.aggregate()
+        .addFields({ numPosts: { $size: "$posts" } })
+        .sort({ numPosts: -1 })
+        .limit(5);
+};
+
 module.exports = UserService;

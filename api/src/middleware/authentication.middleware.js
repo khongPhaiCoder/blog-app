@@ -1,6 +1,6 @@
 const wrapAsync = require("../utils/wrap-async");
 const CustomError = require("../errors/index");
-const { isValidJWTToken } = require("../utils/jwt");
+const { decodedJWTToken } = require("../utils/jwt");
 
 const authenticationMiddleware = {};
 
@@ -13,7 +13,7 @@ authenticationMiddleware.authenticateUser = wrapAsync((req, res, next) => {
 
     const token = authHeader.split(" ")[1];
 
-    const decodedToken = isValidJWTToken(token);
+    const decodedToken = decodedJWTToken(token);
 
     if (!decodedToken) {
         throw new CustomError.UnauthenticatedError("Not authenticated!");

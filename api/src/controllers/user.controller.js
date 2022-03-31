@@ -52,4 +52,15 @@ UserController.getUser = wrapAsync(async (req, res, next) => {
     });
 });
 
+UserController.getAuthors = wrapAsync(async (req, res, next) => {
+    const users = await UserService.getAuthors();
+
+    const userList = users.map((user) => shortUser(user));
+
+    res.status(StatusCodes.OK).json({
+        message: "Get new users",
+        authors: userList,
+    });
+});
+
 module.exports = UserController;

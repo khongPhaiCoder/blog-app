@@ -7,12 +7,10 @@ const authenticationMiddleware = require("../middleware/authentication.middlewar
 
 router
     .route("/")
-    .all(
-        authenticationMiddleware.authenticateUser,
-        authenticationMiddleware.authorizePermissions
-    )
+    .all(authenticationMiddleware.authenticateUser)
     .get(CategoryController.getCategories)
     .post(
+        authenticationMiddleware.authorizePermissions,
         CategoryMiddleware.bodyNewCategoryValidation,
         requestValidation,
         CategoryController.newCategory

@@ -5,6 +5,8 @@ const UserMiddleware = require("../middleware/user.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 const authenticationMiddleware = require("../middleware/authentication.middleware");
 
+router.get("/authors", UserController.getAuthors);
+
 router
     .route("/:userId")
     .all(UserMiddleware.paramsValidation, requestValidation)

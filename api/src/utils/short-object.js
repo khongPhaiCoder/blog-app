@@ -8,7 +8,8 @@ const shortRole = (role) => {
 };
 
 const shortUser = (user) => {
-    const { _id, password, createdAt, updatedAt, __v, ...other } = user._doc;
+    const { _id, password, createdAt, updatedAt, __v, ...other } =
+        user._doc || user;
 
     return {
         _id: _id.toString(),

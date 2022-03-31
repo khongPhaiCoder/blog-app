@@ -22,10 +22,16 @@ PostService.findByField = async (payload) => {
         });
 };
 
-PostService.getPostList = async () => {
-    return await PostModel.find({})
-        .select("author title categories likes dislike views comments")
+PostService.getPostList = async (q, page) => {
+    return await PostModel.find({
+        title: { $regex: ".*" + q + ".*" },
+    })
+        .select(
+            "author title categories likes dislike views comments updatedAt"
+        )
         .sort({ updatedAt: -1 })
+        .skip((page - 1) * 10)
+        .limit(10)
         .populate({
             path: "categories",
             select: "name",
