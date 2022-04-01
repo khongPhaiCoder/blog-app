@@ -6,6 +6,9 @@ const { shortRole } = require("../utils/short-object");
 
 const RoleController = {};
 
+// @desc    Create new role
+// @route   POST /api/role
+// @access  Private/Admin
 RoleController.newRole = wrapAsync(async (req, res, next) => {
     const { role } = req.body;
     const nRole = await RoleService.newRole({ name: role });
@@ -16,6 +19,9 @@ RoleController.newRole = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Get all roles
+// @route   GET /api/role
+// @access  Private/Admin
 RoleController.getRoles = wrapAsync(async (req, res, next) => {
     const roles = await RoleService.findByField({});
     const shRoles = roles.map((item) => shortRole(item));

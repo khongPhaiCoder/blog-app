@@ -7,6 +7,9 @@ const { shortUser } = require("../utils/short-object");
 
 const UserController = {};
 
+// @desc    Update user account
+// @route   PUT /api/user/:userId
+// @access  Private
 UserController.updateUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
 
@@ -29,6 +32,9 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Delete user account
+// @route   DELETE /api/user/:userId
+// @access  Private/Admin
 UserController.deleteUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
 
@@ -39,6 +45,9 @@ UserController.deleteUser = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Get user by id
+// @route   GET /api/user/:userId
+// @access  Public
 UserController.getUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
 
@@ -52,13 +61,16 @@ UserController.getUser = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Get top authors
+// @route   GET /api/user/authors
+// @access  Public
 UserController.getAuthors = wrapAsync(async (req, res, next) => {
     const users = await UserService.getAuthors();
 
     const userList = users.map((user) => shortUser(user));
 
     res.status(StatusCodes.OK).json({
-        message: "Get new users",
+        message: "Get top authors",
         authors: userList,
     });
 });

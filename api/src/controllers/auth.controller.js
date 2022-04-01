@@ -9,6 +9,9 @@ const { shortUser } = require("../utils/short-object");
 
 const AuthController = {};
 
+// @desc    Register a new user
+// @route   POST /api/auth/register
+// @access  Public
 AuthController.register = wrapAsync(async (req, res, next) => {
     const { username, email, password } = req.body;
     const hashedPassword = await hashPassword(password);
@@ -25,6 +28,9 @@ AuthController.register = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Auth user & get token
+// @route   POST /api/auth/login
+// @access  Public
 AuthController.login = wrapAsync(async (req, res, next) => {
     const { email, password } = req.body;
 

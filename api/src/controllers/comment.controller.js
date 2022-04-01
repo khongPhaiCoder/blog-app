@@ -5,18 +5,11 @@ const wrapAsync = require("../utils/wrap-async");
 
 const CommentController = {};
 
+// @desc    Create new comment
+// @route   POST /api/comment
+// @access  Private
 CommentController.newComment = wrapAsync(async (req, res, next) => {
     const { author, post, replyTo, content } = req.body;
-
-    // let parentComment;
-    // if (replyTo) {
-    //     if (!(await CommentService.isExist(replyTo))) {
-    //         throw new CustomError.NotFoundError(
-    //             `Comment ${replyTo} not found!`
-    //         );
-    //     }
-    //     parentComment = await CommentService.findById(replyTo);
-    // }
 
     const comment = await CommentService.newComment({
         author: author,
@@ -24,18 +17,15 @@ CommentController.newComment = wrapAsync(async (req, res, next) => {
         content: content,
     });
 
-    // if (parentComment) {
-    //     await CommentService.update(replyTo, {
-    //         $push: { replies: comment._id.toString() },
-    //     });
-    // }
-
     res.status(StatusCodes.CREATED).json({
         message: "Comment created",
         comment_id: comment._id.toString(),
     });
 });
 
+// @desc    Update comment
+// @route   PUT /api/comment/:commentId
+// @access  Private
 CommentController.updateComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
     const { content } = req.body;
@@ -47,6 +37,9 @@ CommentController.updateComment = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Delete comment
+// @route   DELETE /api/comment/:commentId
+// @access  Private
 CommentController.deleteComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
 
@@ -57,6 +50,9 @@ CommentController.deleteComment = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    React to a comment (like/dislike)
+// @route   POST /api/comment/:commentId/react?react=like|dislike
+// @access  Private
 CommentController.reactComment = wrapAsync(async (req, res, next) => {
     const { react } = req.query;
     const { commentId } = req.params;

@@ -6,6 +6,9 @@ const { shortCategory } = require("../utils/short-object");
 
 const CategoryController = {};
 
+// @desc    Create new category
+// @route   POST /api/category
+// @access  Private
 CategoryController.newCategory = wrapAsync(async (req, res, next) => {
     const { category } = req.body;
     const nCategory = await CategoryService.newCategory({ name: category });
@@ -16,6 +19,9 @@ CategoryController.newCategory = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Get all categories
+// @route   GET /api/category
+// @access  Private
 CategoryController.getCategories = wrapAsync(async (req, res, next) => {
     const categories = await CategoryService.findByField({});
     const shCategories = categories.map((item) => shortCategory(item));

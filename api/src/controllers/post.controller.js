@@ -7,6 +7,9 @@ const wrapAsync = require("../utils/wrap-async");
 
 const PostController = {};
 
+// @desc    Create new post
+// @route   POST /api/post
+// @access  Private
 PostController.newPost = wrapAsync(async (req, res, next) => {
     const { author, title, content, categories } = req.body;
 
@@ -29,6 +32,9 @@ PostController.newPost = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Find post by id
+// @route   GET /api/post/:postId
+// @access  Public
 PostController.getPost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
@@ -42,6 +48,9 @@ PostController.getPost = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Delete a post
+// @route   DELETE /api/post/:postId
+// @access  Private
 PostController.deletePost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
@@ -52,6 +61,9 @@ PostController.deletePost = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Update a post
+// @route   PUT /api/post/:postId
+// @access  Private
 PostController.updatePost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
@@ -79,6 +91,9 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    React a post (like/dislike)
+// @route   POST /api/post/:postId/react?react=like|dislike
+// @access  Private
 PostController.reactPost = wrapAsync(async (req, res, next) => {
     const { react } = req.query;
     const { postId } = req.params;
@@ -111,6 +126,9 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
     });
 });
 
+// @desc    Find post list, filter by query(q) and page
+// @route   GET /api/post?q=''&page=1
+// @access  Public
 PostController.getPostList = wrapAsync(async (req, res, next) => {
     const { q = "", page = 1 } = req.params;
     const posts = await PostService.getPostList(q, page);
