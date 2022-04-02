@@ -26,7 +26,7 @@ authenticationMiddleware.authenticateUser = wrapAsync((req, res, next) => {
 });
 
 authenticationMiddleware.authorizePermissions = wrapAsync((req, res, next) => {
-    if (req.userId !== req.body.userId && !req.roles.includes("ADMIN")) {
+    if (!req.userId && !req.roles.includes("ADMIN")) {
         throw new CustomError.UnauthorizedError(
             "Unauthorized to access this route"
         );
@@ -36,7 +36,7 @@ authenticationMiddleware.authorizePermissions = wrapAsync((req, res, next) => {
 
 authenticationMiddleware.authorizePrivatePermissions = wrapAsync(
     (req, res, next) => {
-        if (req.userId !== req.body.userId) {
+        if (!req.userId) {
             throw new CustomError.UnauthorizedError(
                 "Unauthorized to access this route"
             );
@@ -44,5 +44,14 @@ authenticationMiddleware.authorizePrivatePermissions = wrapAsync(
         next();
     }
 );
+
+authenticationMiddleware.adminPermissions = wrapAsync((req, res, next) => {
+    if (!req.roles.includes("ADMIN")) {
+        throw new CustomError.UnauthorizedError(
+            "Unauthorized to access this route"
+        );
+    }
+    next();
+});
 
 module.exports = authenticationMiddleware;

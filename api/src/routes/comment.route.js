@@ -18,7 +18,7 @@ router
     .route("/:commentId")
     .all(
         authenticationMiddleware.authenticateUser,
-        authenticationMiddleware.authorizePrivatePermissions,
+        authenticationMiddleware.authorizePermissions,
         CommentMiddleware.paramValidation,
         requestValidation
     )

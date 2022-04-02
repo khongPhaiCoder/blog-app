@@ -9,14 +9,6 @@ const CustomError = require("../errors/index");
 const PostMiddleware = {};
 
 PostMiddleware.bodyNewAndUpdatePostValidation = [
-    body("author")
-        .isMongoId()
-        .custom(async (value) => {
-            if (!(await UserService.isExist(value))) {
-                throw new CustomError.NotFoundError(`User ${value} not found!`);
-            }
-            return true;
-        }),
     body("title").not().isEmpty(),
     body("content").not().isEmpty(),
     body("categories")
@@ -47,14 +39,6 @@ PostMiddleware.reactValidation = [
         .custom(async (value) => {
             if (!(await PostService.isExist(value))) {
                 throw new CustomError.NotFoundError(`Post ${value} not found!`);
-            }
-            return true;
-        }),
-    body("userId")
-        .isMongoId()
-        .custom(async (value) => {
-            if (!(await UserService.isExist(value))) {
-                throw new CustomError.NotFoundError(`User ${value} not found!`);
             }
             return true;
         }),

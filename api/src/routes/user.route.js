@@ -5,6 +5,13 @@ const UserMiddleware = require("../middleware/user.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 const authenticationMiddleware = require("../middleware/authentication.middleware");
 
+router.get(
+    "/",
+    authenticationMiddleware.authenticateUser,
+    authenticationMiddleware.adminPermissions,
+    UserController.findUsers
+);
+
 router.get("/authors", UserController.getAuthors);
 
 router
@@ -20,6 +27,9 @@ router
         requestValidation,
         UserController.updateUser
     )
-    .delete(UserController.deleteUser);
+    .delete(
+        authenticationMiddleware.adminPermissions,
+        UserController.deleteUser
+    );
 
 module.exports = router;

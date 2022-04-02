@@ -8,14 +8,6 @@ const CustomError = require("../errors/index");
 const CommentMiddleware = {};
 
 CommentMiddleware.bodyNewCommentValidation = [
-    body("author")
-        .isMongoId()
-        .custom(async (value) => {
-            if (!(await UserService.isExist(value))) {
-                throw new CustomError.NotFoundError(`User ${value} not found!`);
-            }
-            return true;
-        }),
     body("post")
         .isMongoId()
         .custom(async (value) => {
@@ -68,14 +60,6 @@ CommentMiddleware.reactValidation = [
                 throw new CustomError.NotFoundError(
                     `Comment ${value} not found!`
                 );
-            }
-            return true;
-        }),
-    body("userId")
-        .isMongoId()
-        .custom(async (value) => {
-            if (!(await UserService.isExist(value))) {
-                throw new CustomError.NotFoundError(`User ${value} not found!`);
             }
             return true;
         }),

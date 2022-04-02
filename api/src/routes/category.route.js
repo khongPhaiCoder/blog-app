@@ -10,7 +10,7 @@ router
     .all(authenticationMiddleware.authenticateUser)
     .get(CategoryController.getCategories)
     .post(
-        authenticationMiddleware.authorizePermissions,
+        authenticationMiddleware.adminPermissions,
         CategoryMiddleware.bodyNewCategoryValidation,
         requestValidation,
         CategoryController.newCategory

@@ -13,6 +13,7 @@ router
     )
     .get(RoleController.getRoles)
     .post(
+        authenticationMiddleware.adminPermissions,
         RoleMiddleware.bodyNewRoleValidation,
         requestValidation,
         RoleController.newRole

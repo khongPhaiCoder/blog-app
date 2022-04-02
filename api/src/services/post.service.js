@@ -22,7 +22,7 @@ PostService.findByField = async (payload) => {
         });
 };
 
-PostService.getPostList = async (q, page) => {
+PostService.getPostList = async (q = "", page = 1) => {
     return await PostModel.find({
         title: { $regex: ".*" + q + ".*" },
     })

@@ -1,4 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
 
 const PostService = require("../services/post.service");
 const clearImage = require("../utils/clear-image");
@@ -11,7 +12,7 @@ const PostController = {};
 // @route   POST /api/post
 // @access  Private
 PostController.newPost = wrapAsync(async (req, res, next) => {
-    const { author, title, content, categories } = req.body;
+    const { title, content, categories } = req.body;
 
     let images = [];
     if (req.files && req.files.postImages) {
@@ -19,7 +20,7 @@ PostController.newPost = wrapAsync(async (req, res, next) => {
     }
 
     const post = await PostService.newPost({
-        author: author,
+        author: req.userId,
         title: title,
         content: content,
         categories: categories,
@@ -54,6 +55,17 @@ PostController.getPost = wrapAsync(async (req, res, next) => {
 PostController.deletePost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
+    const post = (await PostService.findByField({ _id: postId }))[0];
+
+    if (
+        !req.roles.includes("ADMIN") &&
+        req.userId !== post._doc.author.toString()
+    ) {
+        throw new CustomError.UnauthorizedError(
+            "Unauthorized to access this route"
+        );
+    }
+
     await PostService.deletePost(postId);
 
     res.status(StatusCodes.OK).json({
@@ -71,14 +83,15 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
 
     const postImage = post._doc.images;
 
-    const { author, content, categories } = req.body;
+    const { title, content, categories } = req.body;
     let images = [];
     if (req.files && req.files.postImages) {
         images = req.files.postImages.map((item) => item.filename);
     }
 
     await PostService.updatePost(postId, {
-        author: author,
+        author: req.userId,
+        title: title,
         content: content,
         categories: categories,
         images: images,
@@ -97,9 +110,9 @@ PostController.updatePost = wrapAsync(async (req, res, next) => {
 PostController.reactPost = wrapAsync(async (req, res, next) => {
     const { react } = req.query;
     const { postId } = req.params;
-    const { userId } = req.body;
 
     const post = (await PostService.findByField({ _id: postId }))[0];
+    const userId = req.userId;
 
     if (react === "like") {
         if (post._doc.likes.includes(userId)) {
@@ -130,7 +143,7 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
 // @route   GET /api/post?q=''&page=1
 // @access  Public
 PostController.getPostList = wrapAsync(async (req, res, next) => {
-    const { q = "", page = 1 } = req.params;
+    const { q, page } = req.query;
     const posts = await PostService.getPostList(q, page);
 
     res.status(StatusCodes.OK).json({

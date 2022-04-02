@@ -4,6 +4,7 @@ const UserService = require("../services/user.service");
 const wrapAsync = require("../utils/wrap-async");
 const clearImage = require("../utils/clear-image");
 const { shortUser } = require("../utils/short-object");
+const CustomError = require("../errors");
 
 const UserController = {};
 
@@ -15,8 +16,18 @@ UserController.updateUser = wrapAsync(async (req, res, next) => {
 
     const user = (await UserService.findByField({ _id: userId }))[0];
 
+    if (req.userId !== userId && !req.roles.includes("ADMIN")) {
+        throw new CustomError.UnauthorizedError(
+            "Unauthorized to access this route"
+        );
+    }
+
     const { username, roles } = req.body;
-    const updateInfo = { username, roles };
+    const updateInfo = { username };
+
+    if (req.roles.includes("ADMIN") && roles) {
+        updateInfo.roles = roles;
+    }
 
     if (req.files && req.files.profilePicture) {
         if (user.profilePicture !== process.env.DEFAULT_PROFILE_PICTURE) {
@@ -72,6 +83,19 @@ UserController.getAuthors = wrapAsync(async (req, res, next) => {
     res.status(StatusCodes.OK).json({
         message: "Get top authors",
         authors: userList,
+    });
+});
+
+// @desc    Find user
+// @route   GET /api/user
+// @access  Private/Admin
+UserController.findUsers = wrapAsync(async (req, res, next) => {
+    const { q, page } = req.query;
+    const users = await UserService.findUsers(q, page);
+
+    res.status(StatusCodes.OK).json({
+        message: "Find users",
+        users: users,
     });
 });
 

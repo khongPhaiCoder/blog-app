@@ -47,4 +47,18 @@ UserService.getAuthors = async () => {
         .limit(5);
 };
 
+UserService.findUsers = async (q = "", page = 1) => {
+    return await UserModel.find({
+        username: { $regex: ".*" + q + ".*" },
+    })
+        .select("username email profilePicture posts roles")
+        .sort({ updatedAt: -1 })
+        .skip((page - 1) * 10)
+        .limit(10)
+        .populate({
+            path: "roles",
+            select: "name",
+        });
+};
+
 module.exports = UserService;

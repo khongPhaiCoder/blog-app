@@ -1,4 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
 
 const CommentService = require("../services/comment.service");
 const wrapAsync = require("../utils/wrap-async");
@@ -9,10 +10,10 @@ const CommentController = {};
 // @route   POST /api/comment
 // @access  Private
 CommentController.newComment = wrapAsync(async (req, res, next) => {
-    const { author, post, replyTo, content } = req.body;
+    const { post, content } = req.body;
 
     const comment = await CommentService.newComment({
-        author: author,
+        author: req.userId,
         post: post,
         content: content,
     });
@@ -30,6 +31,14 @@ CommentController.updateComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
     const { content } = req.body;
 
+    const comment = await CommentService.findById(commentId);
+
+    if (req.userId !== comment._doc.author._id.toString()) {
+        throw new CustomError.UnauthorizedError(
+            "Unauthorized to access this route"
+        );
+    }
+
     await CommentService.updateComment(commentId, { content: content });
 
     res.status(StatusCodes.OK).json({
@@ -42,6 +51,17 @@ CommentController.updateComment = wrapAsync(async (req, res, next) => {
 // @access  Private
 CommentController.deleteComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
+
+    const comment = await CommentService.findById(commentId);
+
+    if (
+        !req.roles.includes("ADMIN") &&
+        req.userId !== comment._doc.author._id.toString()
+    ) {
+        throw new CustomError.UnauthorizedError(
+            "Unauthorized to access this route"
+        );
+    }
 
     await CommentService.deleteComment(commentId);
 
@@ -56,7 +76,7 @@ CommentController.deleteComment = wrapAsync(async (req, res, next) => {
 CommentController.reactComment = wrapAsync(async (req, res, next) => {
     const { react } = req.query;
     const { commentId } = req.params;
-    const { userId } = req.body;
+    const userId = req.userId;
 
     const comment = await CommentService.findById(commentId);
 
