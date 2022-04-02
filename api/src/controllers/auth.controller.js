@@ -32,7 +32,7 @@ AuthController.register = wrapAsync(async (req, res, next) => {
 // @route   POST /api/auth/login
 // @access  Public
 AuthController.login = wrapAsync(async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password, admin } = req.body;
 
     const user = (await UserService.findByField({ email: email }))[0];
 
@@ -44,6 +44,16 @@ AuthController.login = wrapAsync(async (req, res, next) => {
 
     if (!(await comparePassword(password, user.password))) {
         throw new CustomError.UnauthenticatedError("Incorrect password!");
+    }
+
+    if (!!admin) {
+        const roles = user.roles.map((item) => item.name);
+
+        if (!roles.includes("ADMIN")) {
+            throw new CustomError.UnauthorizedError(
+                "Unauthorized to access this route"
+            );
+        }
     }
 
     const token = createJWT({
