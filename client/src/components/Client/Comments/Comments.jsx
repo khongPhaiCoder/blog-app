@@ -5,7 +5,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { format } from "timeago.js";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 import "./comments.css";
 import { useAlert } from "react-alert";
 

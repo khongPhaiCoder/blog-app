@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/Footer/Footer";
-import Topbar from "./components/Topbar/Topbar";
+import Footer from "./components/Client/Footer/Footer";
+import Topbar from "./components/Client/Topbar/Topbar";
 import { Context } from "./context/Context";
 // import ToTop from "./components/ToTop/ToTop";
-import Article from "./pages/Article/Article";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import Setting from "./pages/Setting/Setting";
-import SignUp from "./pages/SignUp/SignUp";
-import Write from "./pages/Write/Write";
+import Article from "./pages/Client/Article/Article";
+import Home from "./pages/Client/Home/Home";
+import Login from "./pages/Client/Login/Login";
+import Setting from "./pages/Client/Setting/Setting";
+import SignUp from "./pages/Client/SignUp/SignUp";
+import Write from "./pages/Client/Write/Write";
 
 function App() {
     const { user } = useContext(Context);

@@ -1,5 +1,5 @@
 import React from "react";
-import { authors } from "../../DummyData";
+import { authors } from "../../../DummyData";
 import Author from "../Author/Author";
 import "./authorList.css";
 

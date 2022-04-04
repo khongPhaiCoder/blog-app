@@ -3,7 +3,7 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import "./topbar.css";
 import { Login } from "./Login";
 import Setting from "./Setting";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 
 const Topbar = () => {
     const onSubmitHandler = (e) => {

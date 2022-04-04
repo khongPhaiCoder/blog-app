@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useAlert } from "react-alert";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 import "./setting.css";
 import axios from "axios";
 

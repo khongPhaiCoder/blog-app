@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useAlert } from "react-alert";
-import ArticleList from "../../components/ArticleList/ArticleList";
-import InterestArticleList from "../../components/InterestActicleList/InterestArticleList";
-import Pagination from "../../components/Pagination/Pagination";
 import { Container } from "react-bootstrap";
-import "./home.css";
-import AuthorList from "../../components/AuthorList/AuthorList";
 import axios from "axios";
+
+import ArticleList from "../../../components/Client/ArticleList/ArticleList";
+import InterestArticleList from "../../../components/Client/InterestActicleList/InterestArticleList";
+import Pagination from "../../../components/Client/Pagination/Pagination";
+import "./home.css";
+import AuthorList from "../../../components/Client/AuthorList/AuthorList";
 
 const Home = () => {
     const [posts, setPosts] = useState([]);

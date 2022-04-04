@@ -4,10 +4,10 @@ import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useAlert } from "react-alert";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 import "./write.css";
 import axios from "axios";
-import CategoryList from "../../components/CategoryList/CategoryList";
+import CategoryList from "../../../components/Client/CategoryList/CategoryList";
 
 const Write = () => {
     const { user } = useContext(Context);

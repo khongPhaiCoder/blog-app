@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import axios from "axios";
 import { Container } from "react-bootstrap";
-import ArticleBar from "../../components/ArticleBar/ArticleBar";
-import ArticleBody from "../../components/ArticleBody/ArticleBody";
-import ArticleTop from "../../components/ArticleTop/ArticleTop";
+import ArticleBar from "../../../components/Client/ArticleBar/ArticleBar";
+import ArticleBody from "../../../components/Client/ArticleBody/ArticleBody";
+import ArticleTop from "../../../components/Client/ArticleTop/ArticleTop";
 import "./article.css";
-import Comments from "../../components/Comments/Comments";
+import Comments from "../../../components/Client/Comments/Comments";
 
 const Article = () => {
     const [post, setPost] = useState(null);

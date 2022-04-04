@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Dropdown, Nav, Image } from "react-bootstrap";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 
 const Setting = ({ avatar }) => {
     const { dispatch } = useContext(Context);

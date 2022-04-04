@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 import "./login.css";
 
 const Login = () => {

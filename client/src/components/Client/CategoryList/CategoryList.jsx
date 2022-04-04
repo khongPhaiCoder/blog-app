@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 import "./categoryList.css";
 
 const CategoryList = ({ onCategoriesChange }) => {

@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid, brands } from "@fortawesome/fontawesome-svg-core/import.macro";
 import "./articleBar.css";
-import { Context } from "../../context/Context";
+import { Context } from "../../../context/Context";
 import { useAlert } from "react-alert";
 
 const ArticleBar = ({ likes, dislikes, postId }) => {
