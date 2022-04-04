@@ -4,6 +4,7 @@ const UserController = require("../controllers/user.controller");
 const UserMiddleware = require("../middleware/user.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 const authenticationMiddleware = require("../middleware/authentication.middleware");
+const cleanCache = require("../middleware/clean-cache.middleware");
 
 router.get(
     "/",
@@ -25,10 +26,12 @@ router
     .put(
         UserMiddleware.bodyUpdateValidation,
         requestValidation,
+        cleanCache,
         UserController.updateUser
     )
     .delete(
         authenticationMiddleware.adminPermissions,
+        cleanCache,
         UserController.deleteUser
     );
 

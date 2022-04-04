@@ -7,11 +7,13 @@ UserService.newUser = async (payload) => {
     return await user.save();
 };
 
-UserService.findByField = async (payload) => {
-    return await UserModel.find(payload).populate({
-        path: "roles",
-        select: "name",
-    });
+UserService.findByField = async (payload, userId) => {
+    return await UserModel.find(payload)
+        .populate({
+            path: "roles",
+            select: "name",
+        })
+        .cache({ key: userId });
 };
 
 UserService.updateUser = async (id, payload) => {
@@ -40,14 +42,15 @@ UserService.removePost = async (userId, postId) => {
     });
 };
 
-UserService.getAuthors = async () => {
+UserService.getAuthors = async (userId) => {
     return await UserModel.aggregate()
         .addFields({ numPosts: { $size: "$posts" } })
         .sort({ numPosts: -1 })
-        .limit(5);
+        .limit(5)
+        .cache({ key: userId });
 };
 
-UserService.findUsers = async (q = "", page = 1) => {
+UserService.findUsers = async (q = "", page = 1, userId) => {
     return await UserModel.find({
         username: { $regex: ".*" + q + ".*" },
     })
@@ -58,7 +61,8 @@ UserService.findUsers = async (q = "", page = 1) => {
         .populate({
             path: "roles",
             select: "name",
-        });
+        })
+        .cache({ key: userId });
 };
 
 module.exports = UserService;

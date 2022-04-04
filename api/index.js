@@ -11,6 +11,7 @@ const morgan = require("morgan");
 const connectDatabase = require("./src/configs/db.config");
 const morganConfig = require("./src/configs/morgan.config");
 const multerConfig = require("./src/configs/multer.config");
+require("./src/services/cache.service");
 
 dotenv.config();
 connectDatabase();

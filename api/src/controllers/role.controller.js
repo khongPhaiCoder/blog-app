@@ -23,7 +23,7 @@ RoleController.newRole = wrapAsync(async (req, res, next) => {
 // @route   GET /api/role
 // @access  Private/Admin
 RoleController.getRoles = wrapAsync(async (req, res, next) => {
-    const roles = await RoleService.findByField({});
+    const roles = await RoleService.findByField({}, req.userId);
     const shRoles = roles.map((item) => shortRole(item));
 
     res.status(StatusCodes.OK).json({

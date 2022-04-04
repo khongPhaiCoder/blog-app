@@ -4,6 +4,7 @@ const RoleController = require("../controllers/role.controller");
 const RoleMiddleware = require("../middleware/role.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 const authenticationMiddleware = require("../middleware/authentication.middleware");
+const cleanCache = require("../middleware/clean-cache.middleware");
 
 router
     .route("/")
@@ -16,6 +17,7 @@ router
         authenticationMiddleware.adminPermissions,
         RoleMiddleware.bodyNewRoleValidation,
         requestValidation,
+        cleanCache,
         RoleController.newRole
     );
 

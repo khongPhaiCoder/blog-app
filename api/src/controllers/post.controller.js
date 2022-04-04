@@ -39,7 +39,9 @@ PostController.newPost = wrapAsync(async (req, res, next) => {
 PostController.getPost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
-    const post = (await PostService.findByField({ _id: postId }))[0];
+    const post = (
+        await PostService.findByField({ _id: postId }, req.userId)
+    )[0];
 
     const shPost = shortPost(post);
 
@@ -55,7 +57,9 @@ PostController.getPost = wrapAsync(async (req, res, next) => {
 PostController.deletePost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
-    const post = (await PostService.findByField({ _id: postId }))[0];
+    const post = (
+        await PostService.findByField({ _id: postId }, req.userId)
+    )[0];
 
     if (
         !req.roles.includes("ADMIN") &&
@@ -79,7 +83,9 @@ PostController.deletePost = wrapAsync(async (req, res, next) => {
 PostController.updatePost = wrapAsync(async (req, res, next) => {
     const { postId } = req.params;
 
-    const post = (await PostService.findByField({ _id: postId }))[0];
+    const post = (
+        await PostService.findByField({ _id: postId }, req.userId)
+    )[0];
 
     const postImage = post._doc.images;
 
@@ -111,7 +117,9 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
     const { react } = req.query;
     const { postId } = req.params;
 
-    const post = (await PostService.findByField({ _id: postId }))[0];
+    const post = (
+        await PostService.findByField({ _id: postId }, req.userId)
+    )[0];
     const userId = req.userId;
 
     if (react === "like") {
@@ -144,7 +152,7 @@ PostController.reactPost = wrapAsync(async (req, res, next) => {
 // @access  Public
 PostController.getPostList = wrapAsync(async (req, res, next) => {
     const { q, page } = req.query;
-    const posts = await PostService.getPostList(q, page);
+    const posts = await PostService.getPostList(q, page, req.userId);
 
     res.status(StatusCodes.OK).json({
         message: "Get post list",

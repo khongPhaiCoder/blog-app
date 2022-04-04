@@ -2,7 +2,7 @@ const PostModel = require("../models/post.model");
 
 const PostService = {};
 
-PostService.findByField = async (payload) => {
+PostService.findByField = async (payload, userId) => {
     return await PostModel.find(payload)
         .populate({
             path: "categories",
@@ -19,10 +19,11 @@ PostService.findByField = async (payload) => {
                 path: "author",
                 select: "username email profilePicture",
             },
-        });
+        })
+        .cache({ key: userId || process.env.GUEST_ID });
 };
 
-PostService.getPostList = async (q = "", page = 1) => {
+PostService.getPostList = async (q = "", page = 1, userId) => {
     return await PostModel.find({
         title: { $regex: ".*" + q + ".*" },
     })
@@ -39,7 +40,8 @@ PostService.getPostList = async (q = "", page = 1) => {
         .populate({
             path: "author",
             select: "username email profilePicture",
-        });
+        })
+        .cache({ key: userId || process.env.GUEST_ID });
 };
 
 PostService.isExist = async (id) => {

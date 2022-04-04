@@ -4,6 +4,7 @@ const CommentController = require("../controllers/comment.controller");
 const CommentMiddleware = require("../middleware/comment.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 const authenticationMiddleware = require("../middleware/authentication.middleware");
+const cleanCache = require("../middleware/clean-cache.middleware");
 
 router.post(
     "/",
@@ -11,6 +12,7 @@ router.post(
     authenticationMiddleware.authorizePrivatePermissions,
     CommentMiddleware.bodyNewCommentValidation,
     requestValidation,
+    cleanCache,
     CommentController.newComment
 );
 
@@ -25,9 +27,10 @@ router
     .put(
         CommentMiddleware.bodyUpdateValidation,
         requestValidation,
+        cleanCache,
         CommentController.updateComment
     )
-    .delete(CommentController.deleteComment);
+    .delete(cleanCache, CommentController.deleteComment);
 
 router.post(
     "/:commentId/react",
@@ -35,6 +38,7 @@ router.post(
     authenticationMiddleware.authorizePrivatePermissions,
     CommentMiddleware.reactValidation,
     requestValidation,
+    cleanCache,
     CommentController.reactComment
 );
 

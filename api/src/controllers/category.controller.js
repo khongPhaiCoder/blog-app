@@ -23,7 +23,7 @@ CategoryController.newCategory = wrapAsync(async (req, res, next) => {
 // @route   GET /api/category
 // @access  Private
 CategoryController.getCategories = wrapAsync(async (req, res, next) => {
-    const categories = await CategoryService.findByField({});
+    const categories = await CategoryService.findByField({}, req.userId);
     const shCategories = categories.map((item) => shortCategory(item));
 
     res.status(StatusCodes.OK).json({

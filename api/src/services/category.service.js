@@ -7,8 +7,8 @@ CategoryService.newCategory = async (payload) => {
     return await category.save();
 };
 
-CategoryService.findByField = async (payload) => {
-    return await CategoryModel.find(payload);
+CategoryService.findByField = async (payload, userId) => {
+    return await CategoryModel.find(payload).cache({ key: userId });
 };
 
 CategoryService.isExist = async (id) => {

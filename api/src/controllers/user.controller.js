@@ -14,7 +14,9 @@ const UserController = {};
 UserController.updateUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
 
-    const user = (await UserService.findByField({ _id: userId }))[0];
+    const user = (
+        await UserService.findByField({ _id: userId }, req.userId)
+    )[0];
 
     if (req.userId !== userId && !req.roles.includes("ADMIN")) {
         throw new CustomError.UnauthorizedError(
@@ -62,7 +64,9 @@ UserController.deleteUser = wrapAsync(async (req, res, next) => {
 UserController.getUser = wrapAsync(async (req, res, next) => {
     const { userId } = req.params;
 
-    const user = (await UserService.findByField({ _id: userId }))[0];
+    const user = (
+        await UserService.findByField({ _id: userId }, req.userId)
+    )[0];
 
     const shUser = shortUser(user);
 
@@ -76,7 +80,7 @@ UserController.getUser = wrapAsync(async (req, res, next) => {
 // @route   GET /api/user/authors
 // @access  Public
 UserController.getAuthors = wrapAsync(async (req, res, next) => {
-    const users = await UserService.getAuthors();
+    const users = await UserService.getAuthors(req.userId);
 
     const userList = users.map((user) => shortUser(user));
 
@@ -91,7 +95,7 @@ UserController.getAuthors = wrapAsync(async (req, res, next) => {
 // @access  Private/Admin
 UserController.findUsers = wrapAsync(async (req, res, next) => {
     const { q, page } = req.query;
-    const users = await UserService.findUsers(q, page);
+    const users = await UserService.findUsers(q, page, req.userId);
 
     res.status(StatusCodes.OK).json({
         message: "Find users",

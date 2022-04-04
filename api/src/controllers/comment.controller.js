@@ -31,7 +31,7 @@ CommentController.updateComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
     const { content } = req.body;
 
-    const comment = await CommentService.findById(commentId);
+    const comment = await CommentService.findById(commentId, req.userId);
 
     if (req.userId !== comment._doc.author._id.toString()) {
         throw new CustomError.UnauthorizedError(
@@ -52,7 +52,7 @@ CommentController.updateComment = wrapAsync(async (req, res, next) => {
 CommentController.deleteComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
 
-    const comment = await CommentService.findById(commentId);
+    const comment = await CommentService.findById(commentId, req.userId);
 
     if (
         !req.roles.includes("ADMIN") &&
@@ -78,7 +78,7 @@ CommentController.reactComment = wrapAsync(async (req, res, next) => {
     const { commentId } = req.params;
     const userId = req.userId;
 
-    const comment = await CommentService.findById(commentId);
+    const comment = await CommentService.findById(commentId, req.userId);
 
     if (react === "like") {
         if (comment._doc.like.includes(userId)) {

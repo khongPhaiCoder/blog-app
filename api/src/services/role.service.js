@@ -7,8 +7,8 @@ RoleService.newRole = async (payload) => {
     return await role.save();
 };
 
-RoleService.findByField = async (payload) => {
-    return await RoleModel.find(payload);
+RoleService.findByField = async (payload, userId) => {
+    return await RoleModel.find(payload).cache({ key: userId });
 };
 
 RoleService.isExist = async (id) => {

@@ -4,6 +4,7 @@ const PostController = require("../controllers/post.controller");
 const PostMiddleware = require("../middleware/post.middleware");
 const requestValidation = require("../middleware/request-validation.middleware");
 const authenticationMiddleware = require("../middleware/authentication.middleware");
+const cleanCache = require("../middleware/clean-cache.middleware");
 
 router
     .route("/")
@@ -13,6 +14,7 @@ router
         authenticationMiddleware.authorizePermissions,
         PostMiddleware.bodyNewAndUpdatePostValidation,
         requestValidation,
+        cleanCache,
         PostController.newPost
     );
 
@@ -29,9 +31,10 @@ router
     .put(
         PostMiddleware.bodyNewAndUpdatePostValidation,
         requestValidation,
+        cleanCache,
         PostController.updatePost
     )
-    .delete(PostController.deletePost);
+    .delete(cleanCache, PostController.deletePost);
 
 router.post(
     "/:postId/react",
@@ -39,6 +42,7 @@ router.post(
     authenticationMiddleware.authorizePrivatePermissions,
     PostMiddleware.reactValidation,
     requestValidation,
+    cleanCache,
     PostController.reactPost
 );
 

@@ -7,11 +7,13 @@ CommentService.newComment = async (payload) => {
     return await comment.save();
 };
 
-CommentService.findById = async (id) => {
-    return await CommentModel.findById(id).populate({
-        path: "author",
-        select: "username profilePicture",
-    });
+CommentService.findById = async (id, userId) => {
+    return await CommentModel.findById(id)
+        .populate({
+            path: "author",
+            select: "username profilePicture",
+        })
+        .cache({ key: userId });
 };
 
 CommentService.isExist = async (id) => {
