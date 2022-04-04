@@ -1,6 +1,5 @@
 const { body, param, query } = require("express-validator");
 
-const UserService = require("../services/user.service");
 const PostService = require("../services/post.service");
 const CommentService = require("../services/comment.service");
 const CustomError = require("../errors/index");

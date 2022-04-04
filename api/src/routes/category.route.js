@@ -12,10 +12,26 @@ router
     .get(CategoryController.getCategories)
     .post(
         authenticationMiddleware.adminPermissions,
-        CategoryMiddleware.bodyNewCategoryValidation,
+        CategoryMiddleware.bodyValidation,
         requestValidation,
         cleanCache,
         CategoryController.newCategory
     );
+
+router
+    .route("/:categoryId")
+    .all(
+        CategoryMiddleware.paramValidation,
+        authenticationMiddleware.authenticateUser,
+        authenticationMiddleware.adminPermissions,
+        requestValidation
+    )
+    .put(
+        CategoryMiddleware.bodyValidation,
+        requestValidation,
+        cleanCache,
+        CategoryController.updateCategory
+    )
+    .delete(cleanCache, CategoryController.deleteCategory);
 
 module.exports = router;
