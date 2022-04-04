@@ -34,7 +34,7 @@ AuthController.register = wrapAsync(async (req, res, next) => {
 AuthController.login = wrapAsync(async (req, res, next) => {
     const { email, password, admin } = req.body;
 
-    const user = (await UserService.findByField({ email: email }))[0];
+    const user = await UserService.findByEmail(email);
 
     if (!user) {
         throw new CustomError.UnauthenticatedError(

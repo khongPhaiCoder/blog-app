@@ -16,6 +16,13 @@ UserService.findByField = async (payload, userId) => {
         .cache({ key: userId });
 };
 
+UserService.findByEmail = async (email) => {
+    return await UserModel.findOne({ email: email }).populate({
+        path: "roles",
+        select: "name",
+    });
+};
+
 UserService.updateUser = async (id, payload) => {
     return await UserModel.findByIdAndUpdate(id, {
         $set: payload,
