@@ -2,7 +2,6 @@ const { StatusCodes } = require("http-status-codes");
 
 const CategoryService = require("../services/category.service");
 const wrapAsync = require("../utils/wrap-async");
-const { shortCategory } = require("../utils/short-object");
 
 const CategoryController = {};
 

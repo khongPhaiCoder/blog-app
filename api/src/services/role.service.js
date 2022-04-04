@@ -8,11 +8,23 @@ RoleService.newRole = async (payload) => {
 };
 
 RoleService.findByField = async (payload, userId) => {
-    return await RoleModel.find(payload).cache({ key: userId });
+    return await RoleModel.find(payload)
+        .select("-updatedAt -createdAt -__v")
+        .cache({ key: userId });
 };
 
 RoleService.isExist = async (id) => {
     return await RoleModel.exists({ _id: id });
+};
+
+RoleService.updateRole = async (id, payload) => {
+    return await RoleModel.findByIdAndUpdate(id, {
+        $set: payload,
+    });
+};
+
+RoleService.deleteRole = async (id) => {
+    return await RoleModel.findByIdAndDelete(id);
 };
 
 module.exports = RoleService;

@@ -15,10 +15,26 @@ router
     .get(RoleController.getRoles)
     .post(
         authenticationMiddleware.adminPermissions,
-        RoleMiddleware.bodyNewRoleValidation,
+        RoleMiddleware.bodyValidation,
         requestValidation,
         cleanCache,
         RoleController.newRole
     );
+
+router
+    .route("/:roleId")
+    .all(
+        authenticationMiddleware.authenticateUser,
+        authenticationMiddleware.adminPermissions,
+        RoleMiddleware.paramValidation,
+        requestValidation
+    )
+    .put(
+        RoleMiddleware.bodyValidation,
+        requestValidation,
+        cleanCache,
+        RoleController.updateRole
+    )
+    .delete(cleanCache, RoleController.deleteRole);
 
 module.exports = router;

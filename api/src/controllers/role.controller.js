@@ -24,11 +24,37 @@ RoleController.newRole = wrapAsync(async (req, res, next) => {
 // @access  Private/Admin
 RoleController.getRoles = wrapAsync(async (req, res, next) => {
     const roles = await RoleService.findByField({}, req.userId);
-    const shRoles = roles.map((item) => shortRole(item));
 
     res.status(StatusCodes.OK).json({
         message: "Get all roles",
-        roles: shRoles,
+        roles: roles,
+    });
+});
+
+// @desc    Update role
+// @route   PUT /api/role/:roleId
+// @access  Private/Admin
+RoleController.updateRole = wrapAsync(async (req, res, next) => {
+    const { roleId } = req.params;
+    const { role } = req.body;
+
+    await RoleService.updateRole(roleId, { name: role });
+
+    res.status(StatusCodes.OK).json({
+        message: `Role ${roleId} updated`,
+    });
+});
+
+// @desc    Delete role
+// @route   DELETE /api/role/:roleId
+// @access  Private/Admin
+RoleController.deleteRole = wrapAsync(async (req, res, next) => {
+    const { roleId } = req.params;
+
+    await RoleService.deleteRole(roleId);
+
+    res.status(StatusCodes.OK).json({
+        message: `Role ${roleId} deleted`,
     });
 });
 

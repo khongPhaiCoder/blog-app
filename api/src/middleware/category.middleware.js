@@ -10,6 +10,7 @@ CategoryMiddleware.bodyValidation = [body("category").not().isEmpty()];
 CategoryMiddleware.paramValidation = [
     param("categoryId")
         .isMongoId()
+        .withMessage("Invalid id")
         .custom(async (value) => {
             if (!(await CategoryService.isExist(value))) {
                 throw new CustomError.NotFoundError(
